@@ -43,7 +43,7 @@
     quiz: '<path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4zM7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4"/>',
     left: '<path d="M15 5l-7 7 7 7"/>', right: '<path d="M9 5l7 7-7 7"/>'
   };
-  function svg(name) { return '<svg viewBox="0 0 24 24" aria-hidden="true">' + ICON[name] + '</svg>'; }
+  function svg(name, map) { return '<svg viewBox="0 0 24 24" aria-hidden="true">' + ((map && map[name]) || ICON[name]) + '</svg>'; }
 
   /* -------------------------------------------------------------------
      Small helpers
@@ -201,6 +201,7 @@
     this.best = 0;
     this.sound = new PaperSound(this.meta.sound || {});
     this.duration = this.opts.duration || this.meta.duration || 900;
+    this.icons = Object.assign({}, ICON, (this.opts && this.opts.icons) || {});
     this.prepPages();
     this.buildUI();
     this.layout(true);
@@ -254,15 +255,15 @@
 
     var bar = el('header', 'mb-bar');
     bar.innerHTML =
-      '<button class="mb-tool" data-act="toc" aria-label="' + L.contents + '" title="' + L.contents + '">' + svg('menu') + '</button>' +
+      '<button class="mb-tool" data-act="toc" aria-label="' + L.contents + '" title="' + L.contents + '">' + this.svg('menu') + '</button>' +
       '<div class="mb-title"><b></b><small></small></div>' +
       '<span class="mb-score" hidden></span>' +
-      (this.quiz.length ? '<button class="mb-tool" data-act="quiz" aria-label="' + L.quiz + '" title="' + L.quiz + '">' + svg('quiz') + '</button>' : '') +
+      (this.quiz.length ? '<button class="mb-tool" data-act="quiz" aria-label="' + L.quiz + '" title="' + L.quiz + '">' + this.svg('quiz') + '</button>' : '') +
       '<button class="mb-tool" data-act="sound" aria-label="' + L.sound + '" title="' + L.sound + '"></button>' +
-      '<button class="mb-tool" data-act="read" aria-label="' + L.read + '" title="' + L.read + '">' + svg('read') + '</button>' +
-      '<button class="mb-tool" data-act="dark" aria-label="' + L.dark + '" title="' + L.dark + '">' + svg('moon') + '</button>' +
-      '<button class="mb-tool" data-act="full" aria-label="' + L.full + '" title="' + L.full + '">' + svg('full') + '</button>' +
-      '<button class="mb-tool" data-act="print" aria-label="' + L.print + '" title="' + L.print + '">' + svg('print') + '</button>';
+      '<button class="mb-tool" data-act="read" aria-label="' + L.read + '" title="' + L.read + '">' + this.svg('read') + '</button>' +
+      '<button class="mb-tool" data-act="dark" aria-label="' + L.dark + '" title="' + L.dark + '">' + this.svg('moon') + '</button>' +
+      '<button class="mb-tool" data-act="full" aria-label="' + L.full + '" title="' + L.full + '">' + this.svg('full') + '</button>' +
+      '<button class="mb-tool" data-act="print" aria-label="' + L.print + '" title="' + L.print + '">' + this.svg('print') + '</button>';
     bar.querySelector('.mb-title b').textContent = m.title || '';
     bar.querySelector('.mb-title small').textContent = [m.grade, m.subject].filter(Boolean).join(' · ');
     this.scoreEl = bar.querySelector('.mb-score');
@@ -278,9 +279,9 @@
     this.stage.appendChild(this.bookEl); r.appendChild(this.stage);
 
     var foot = el('nav', 'mb-foot');
-    foot.innerHTML = '<button class="mb-nav" data-act="prev" aria-label="' + L.prev + '">' + svg('left') + '</button>' +
+    foot.innerHTML = '<button class="mb-nav" data-act="prev" aria-label="' + L.prev + '">' + this.svg('left') + '</button>' +
       '<label class="mb-scrub"><input type="range" min="0" value="0" aria-label="' + L.jump + '"><span></span></label>' +
-      '<button class="mb-nav" data-act="next" aria-label="' + L.next + '">' + svg('right') + '</button>';
+      '<button class="mb-nav" data-act="next" aria-label="' + L.next + '">' + this.svg('right') + '</button>';
     r.appendChild(foot);
     this.prevBtn = foot.querySelector('[data-act=prev]'); this.nextBtn = foot.querySelector('[data-act=next]');
     this.range = foot.querySelector('input'); this.pill = foot.querySelector('.mb-scrub span');
@@ -311,9 +312,10 @@
     // print copy
     this.printEl = el('div', 'mb-print'); r.appendChild(this.printEl);
   };
+  Book.prototype.svg = function (name) { return svg(name, this.icons); };
   Book.prototype.setSoundIcon = function () {
     var b = this.root.querySelector('[data-act=sound]');
-    b.innerHTML = svg(this.sound.on ? 'sound' : 'mute'); b.setAttribute('aria-pressed', String(this.sound.on));
+    b.innerHTML = this.svg(this.sound.on ? 'sound' : 'mute'); b.setAttribute('aria-pressed', String(this.sound.on));
   };
 
   /* ---- sizing ---- */
@@ -895,14 +897,14 @@
     if (best) u.voice = best;
     u.onend = function () { self.stopRead(); };
     this.speaking = true;
-    var b = this.root.querySelector('[data-act=read]'); b.innerHTML = svg('stop'); b.setAttribute('aria-pressed', 'true');
+    var b = this.root.querySelector('[data-act=read]'); b.innerHTML = this.svg('stop'); b.setAttribute('aria-pressed', 'true');
     ss.speak(u);
   };
   Book.prototype.stopRead = function () {
     if (global.speechSynthesis && this.speaking) global.speechSynthesis.cancel();
     this.speaking = false;
     var b = this.root && this.root.querySelector('[data-act=read]');
-    if (b) { b.innerHTML = svg('read'); b.setAttribute('aria-pressed', 'false'); }
+    if (b) { b.innerHTML = this.svg('read'); b.setAttribute('aria-pressed', 'false'); }
   };
   Book.prototype.print = function () {
     var self = this; this.printEl.innerHTML = '';

@@ -70,8 +70,12 @@ def load_theme_pack(name):
 
     css = CSS_URL.sub(embed_url, read(stylesheet))
     css = re.sub(r"</(?=style\b)", lambda _: r"\3c /", css, flags=re.I)
-    effects = directory / "fx.js"
-    return {"css": css, "js": read(effects) if effects.is_file() else ""}
+    js = []
+    for name in ("fx.js", "icons.js"):   # icons.js attaches to the theme object fx.js creates
+        path = directory / name
+        if path.is_file():
+            js.append(read(path))
+    return {"css": css, "js": "\n".join(js)}
 
 
 def studio_cover_paths():

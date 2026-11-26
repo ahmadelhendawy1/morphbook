@@ -16,3 +16,15 @@ Set `meta.subjectTag` to choose a matching pair. Set `meta.coverImage` or `meta.
 | `maths` | `img/cover-maths.webp` | `img/back-maths.webp` |
 | `language` | `img/cover-language.webp` | `img/back-language.webp` |
 | `history` | `img/cover-history.webp` | `img/back-history.webp` |
+
+## Figma source
+
+The Studio design lives in Figma: **MorphBook · Studio Theme** — https://www.figma.com/design/CkhTqgIlQA2ms6glhpr5Cg
+
+| Page | What it holds | Where it goes in code |
+|---|---|---|
+| Colors | 27 variables in the "Studio" collection, Light and Dark modes, code syntax `var(--name)` | the token block at the top of `theme.css` |
+| Icons | 11 toolbar icon components `icon/<name>`, 24×24, stroke 2.2 | `icons.js` (passed to the engine as `opts.icons`) |
+| Mockup | one RTL book spread built from those variables and icon instances | design reference for `theme.css` |
+
+To change an icon: edit its component in Figma, copy its path data into `icons.js`, rebuild, run `tools/test_book.py`.

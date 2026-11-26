@@ -529,3 +529,6 @@
     transform: none;
   }
 }
+
+/* Toolbar icons come from Figma (themes/studio/icons.js) and are drawn at their designed stroke */
+.mb-root[data-theme="studio"] .mb-tool svg { stroke-width: 2.2; }
