@@ -16,7 +16,7 @@
 | **Automatic glossary** | List each term once in `meta.glossary`; every mention is linked on every page, Arabic prefixes included (و ف ب ك ل ال), and a `glossary` page lists them all. |
 | **Search and meanings** | 🔍 or `/` searches the whole book (Arabic matched without diacritics). Select any word for its meaning, a search, an online look-up or to hear it. |
 | **Practice, labs, video, pictures** | Page types with no HTML to write: flip cards, fill-in, sort, sentence builder; a live lab that pauses off screen; a YouTube page (plays inside on a website, links out from a file); picture slots with the AI image prompt and upload. |
-| **PDF to flipbook** | `dist/studio.html`: drop a PDF or page images, preview it as a book, download one HTML file. Nothing is uploaded. |
+| **Studio** | `dist/studio.html`: **✨ Book with AI** — a click-through teacher interview writes the prompt for ChatGPT / Gemini / Claude, the pasted reply is checked (slips fixed, mistakes explained with a ready fix message) and built; or **📄 From a PDF** — drop a PDF or page images. Download one offline HTML file. Nothing is uploaded. The ai4edutech.com build is `dist/hostinger/` (`python tools/build_studio.py --hosting`). |
 | **Fully offline** | Every picture, icon, avatar and font is inside the one HTML file (fonts are the SIL OFL files in `vendor/fonts/`, only the families a book uses). Nothing is fetched from the internet. `--online-fonts` switches back to Google Fonts. |
 | **Responsive** | Two-page spreads on wide screens, one page on phones; content scales to fill the paper. Print gives clean pages. |
 
