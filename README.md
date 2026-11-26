@@ -12,7 +12,10 @@
 | **Arabic first** | `dir: "rtl"` mirrors the whole book: binding on the right, forward drag from the left page, `ar-EG` read-aloud voice. |
 | **Paper sound** | Synthesized with Web Audio (noise through a sweeping band-pass, plus a landing), so there is no audio file. Or point `meta.sound.url` at your own clip. |
 | **Morph jumps** | Jumping far (contents, scrubber, Home/End) uses the View Transitions API: the spread swings out and the new one swings in. |
-| **Teaching built in** | Glossary pop-ups (`.term`), activities, callouts, dialogue, a contents page that jumps, read-aloud, an end-of-book quiz with sound and a score badge. |
+| **Teaching built in** | Glossary pop-ups, activities, callouts, dialogue, a contents page that jumps and ticks what was read, read-aloud, an end-of-book quiz with sound and a score badge. |
+| **Automatic glossary** | List each term once in `meta.glossary`; every mention is linked on every page, Arabic prefixes included (و ف ب ك ل ال), and a `glossary` page lists them all. |
+| **Search and meanings** | 🔍 or `/` searches the whole book (Arabic matched without diacritics). Select any word for its meaning, a search, an online look-up or to hear it. |
+| **Practice, labs, video, pictures** | Page types with no HTML to write: flip cards, fill-in, sort, sentence builder; a live lab that pauses off screen; a YouTube page (plays inside on a website, links out from a file); picture slots with the AI image prompt and upload. |
 | **PDF to flipbook** | `dist/studio.html`: drop a PDF or page images, preview it as a book, download one HTML file. Nothing is uploaded. |
 | **Fully offline** | Every picture, icon, avatar and font is inside the one HTML file (fonts are the SIL OFL files in `vendor/fonts/`, only the families a book uses). Nothing is fetched from the internet. `--online-fonts` switches back to Google Fonts. |
 | **Responsive** | Two-page spreads on wide screens, one page on phones; content scales to fill the paper. Print gives clean pages. |
@@ -64,11 +67,11 @@ illustrated covers, and the game-show quiz. The cover art, badges, and avatars s
 ## Repository
 
 ```
-engine/        morphbook.js + morphbook.css   the reader (no dependencies)
+engine/        morphbook.js + morphbook-extras.js + morphbook.css   the reader (no dependencies)
 templates/     book.html                       the single-file shell
 tools/         build_book.py  pdf_to_book.py  test_book.py  build_studio.py  build_all.py
 studio/        studio.src.html                 PDF → flipbook studio (built into dist/studio.html)
-examples/      marine-life-ar/  cells-en/      book.json sources
+examples/      water-cycle-ar/  marine-life-ar/  cells-en/  …   book.json sources
 skill/         morphbook/                      the agent skill (interview → build → test → deliver)
 docs/          book-json.md  techniques.md  codex-prompts.md
 vendor/pdfjs/  pdf.js 3.11.174 (Apache-2.0), loaded with isEvalSupported:false
@@ -81,9 +84,10 @@ dist/          built files, ready to open or host (GitHub Pages builds this too)
 <link rel="stylesheet" href="engine/morphbook.css">
 <div id="book" style="height:100vh"></div>
 <script src="engine/morphbook.js"></script>
+<script src="engine/morphbook-extras.js"></script>   <!-- search, practice pages, labs… (optional) -->
 <script>
   const book = MorphBook.mount('#book', bookData, { restore: true });
-  // book.next(), book.prev(), book.goPage(5), book.startQuiz(), book.destroy()
+  // book.next(), book.prev(), book.goPage(5), book.startQuiz(), book.ext.search('…'), book.destroy()
 </script>
 ```
 

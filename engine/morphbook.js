@@ -214,11 +214,14 @@
     this.layout(true);
     this.bindEvents();
     this.restore();
+    if (global.MorphBook && global.MorphBook.extras) this.ext = global.MorphBook.extras(this);   // search, practice, labs…
   }
 
   /* ---- data ---- */
   Book.prototype.prepPages = function () {
     var m = this.meta, self = this;
+    // page types from morphbook-extras.js (practice, video, picture, lab, glossary) + the automatic glossary
+    if (global.MorphBook && global.MorphBook.prepareExtras) global.MorphBook.prepareExtras(this);
     this.pages.forEach(function (p, i) {
       p.type = p.type || (p.image ? 'image' : 'html');
       if (p.type === 'cover' && !p.html) p.html = self.coverHtml();
@@ -449,10 +452,11 @@
     else label = L.page + ' ' + vis.map(function (i) { return i + 1; }).join('–') + ' ' + L.of + ' ' + N;
     this.pill.textContent = label;
     this.range.value = String(this.currentPageIndex());
-    // the arrows point by screen direction: in RTL the left arrow (prevBtn) moves forward
+    // the footer follows the book's direction: in RTL the bar is mirrored, so "next" sits on the LEFT
+    // pointing left (the way an Arabic book opens) and "prev" sits on the right pointing right
     var canBack = s > 0, canFwd = s < this.maxPos();
-    this.prevBtn.disabled = this.rtl ? !canFwd : !canBack;
-    this.nextBtn.disabled = this.rtl ? !canBack : !canFwd;
+    this.prevBtn.disabled = !canBack;
+    this.nextBtn.disabled = !canFwd;
     this.progEl.style.width = Math.round(s / Math.max(1, this.maxPos()) * 100) + '%';
     var self = this;
     Array.prototype.forEach.call(this.drawer.querySelectorAll('.mb-drow'), function (b) {
@@ -462,6 +466,7 @@
     this.stopRead();
     try { localStorage.setItem(this.storeKey(), String(this.currentPageIndex())); } catch (e) {}
     if (this.opts.onPage) this.opts.onPage(vis, this);
+    if (this.ext) this.ext.onPage(vis);
     void self;
   };
   Book.prototype.stackShadow = function (n, dir) {
@@ -820,8 +825,8 @@
       if (b.hasAttribute('data-goto')) { ev.stopPropagation(); self.goPage(parseInt(b.getAttribute('data-goto'), 10)); return; }
       if (b.hasAttribute('data-quiz')) { ev.stopPropagation(); self.startQuiz(); return; }
       var act = b.getAttribute('data-act');
-      if (act === 'next') self.rtl ? self.prev() : self.next();     // arrows point by screen direction
-      else if (act === 'prev') self.rtl ? self.next() : self.prev();
+      if (act === 'next') self.next();           // the RTL footer is mirrored, so no swap is needed here
+      else if (act === 'prev') self.prev();
       else if (act === 'toc') self.openDrawer();
       else if (act === 'quiz') self.startQuiz();
       else if (act === 'qclose') self.closeAll();
@@ -832,8 +837,6 @@
       else if (act === 'full') { if (document.fullscreenElement) document.exitFullscreen(); else if (r.requestFullscreen) r.requestFullscreen(); }
       else if (act === 'print') self.print();
     });
-    // in RTL the arrow buttons show screen direction: the left arrow moves forward
-    if (this.rtl) { this.prevBtn.setAttribute('aria-label', this.L.next); this.nextBtn.setAttribute('aria-label', this.L.prev); }
     this.scrim.addEventListener('click', function () { self.closeAll(); });
     this.range.addEventListener('change', function () { self.goPage(parseInt(self.range.value, 10)); });
 
@@ -864,6 +867,7 @@
   };
 
   Book.prototype.destroy = function () {
+    if (this.ext) { this.ext.destroy(); this.ext = null; }
     this.cancelTurn(); this.stopRead();
     if (this._off) this._off();
     if (this.sound.ctx) try { this.sound.ctx.close(); } catch (e) {}
@@ -981,7 +985,7 @@
      Public API
      ------------------------------------------------------------------- */
   var MorphBook = {
-    version: '1.0.0',
+    version: '1.1.0',
     mount: function (root, data, opts) {
       if (typeof root === 'string') root = document.querySelector(root);
       return new Book(root, data, opts);

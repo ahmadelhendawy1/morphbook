@@ -6,3 +6,4 @@ books/
 .DS_Store
 node_modules/
 themes/*/source-png/
+dist/prototype/

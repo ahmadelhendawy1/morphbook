@@ -21,7 +21,7 @@ from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-VERSION = "1.0.0"
+VERSION = "1.1.0"
 THEMES = Path(ROOT) / "themes"
 STUDIO_SUBJECTS = ("space", "ocean", "nature", "maths", "language", "history")
 CSS_URL = re.compile(
@@ -138,11 +138,40 @@ def check(book):
             errors.append("page %d: type image needs 'image'" % (i + 1))
         if t == "html" and not p.get("html"):
             errors.append("page %d: type html needs 'html'" % (i + 1))
+        if t == "practice":
+            kind, items = p.get("kind", "fill"), p.get("items") or p.get("cards") or []
+            if kind not in ("flip", "fill", "sort", "order"):
+                errors.append("page %d: practice kind must be flip, fill, sort or order" % (i + 1))
+            elif not items:
+                errors.append("page %d: practice page needs 'items'" % (i + 1))
+            elif kind == "fill":
+                for k, it in enumerate(items):
+                    if "___" not in it.get("s", "") or not isinstance(it.get("a"), int) or not 0 <= it["a"] < len(it.get("o", [])):
+                        errors.append("page %d item %d: fill needs 's' with ___, options 'o' and a valid answer index 'a'" % (i + 1, k + 1))
+            elif kind == "sort":
+                bins = p.get("bins", [])
+                if len(bins) < 2 or any(not 0 <= it.get("bin", -1) < len(bins) for it in items):
+                    errors.append("page %d: sort needs 2+ 'bins' and every item's 'bin' must point at one" % (i + 1))
+            elif kind == "order" and any(len(it.get("words", [])) < 2 for it in items):
+                errors.append("page %d: every order item needs 'words' (2 or more, in the correct order)" % (i + 1))
+            elif kind == "flip" and any(not (it.get("front") and it.get("back")) for it in items):
+                errors.append("page %d: every flip card needs 'front' and 'back'" % (i + 1))
+        if t == "video" and not re.search(r"(?:youtu\.be/|v=|embed/|shorts/)[\w-]{11}|^[\w-]{11}$", str(p.get("youtube") or p.get("url") or "")):
+            errors.append("page %d: video page needs 'youtube' (a YouTube link or 11-character id)" % (i + 1))
+        if t == "picture" and not (p.get("prompt") or p.get("image")):
+            errors.append("page %d: picture page needs 'prompt' (the AI image description) or 'image'" % (i + 1))
+        if t == "lab" and p.get("lab", "evaporation") not in ("evaporation", "vapour") and not p.get("customLab"):
+            errors.append("page %d: unknown lab '%s' (built in: evaporation; set customLab: true if your book adds its own)" % (i + 1, p.get("lab")))
     for i, q in enumerate(book.get("quiz", [])):
         ans = q.get("a", q.get("correct"))
         if ans not in q.get("options", []):
             errors.append("quiz %d: the answer is not one of the options" % (i + 1))
     return errors
+
+
+def engine_js():
+    """The engine is two files: morphbook.js (page turning) + morphbook-extras.js (search, practice, labs…)."""
+    return read(os.path.join(ROOT, "engine", "morphbook.js")) + "\n" + read(os.path.join(ROOT, "engine", "morphbook-extras.js"))
 
 
 def build(src, out, link=False, embed=True, fonts=True):
@@ -185,14 +214,14 @@ def build(src, out, link=False, embed=True, fonts=True):
     direction = meta.get("dir", "rtl" if lang == "ar" else "ltr")
     html = read(os.path.join(ROOT, "templates", "book.html"))
     css = read(os.path.join(ROOT, "engine", "morphbook.css"))
-    js = read(os.path.join(ROOT, "engine", "morphbook.js"))
+    js = engine_js()
     data = json.dumps(book, ensure_ascii=False).replace("</", "<\\/")
     title = (meta.get("title") or "Book").replace("<", "&lt;")
     extra_css = book.get("css", "")
     if link:
         rel = os.path.relpath(os.path.join(ROOT, "engine"), os.path.dirname(os.path.abspath(out))).replace(os.sep, "/")
         html = html.replace("/*__MORPHBOOK_CSS__*/", "</style><link rel=\"stylesheet\" href=\"%s/morphbook.css\"><style>" % rel)
-        html = html.replace("<script>\n/*__MORPHBOOK_JS__*/\n</script>", "<script src=\"%s/morphbook.js\"></script>" % rel)
+        html = html.replace("<script>\n/*__MORPHBOOK_JS__*/\n</script>", "<script src=\"%s/morphbook.js\"></script>\n<script src=\"%s/morphbook-extras.js\"></script>" % (rel, rel))
     else:
         html = html.replace("/*__MORPHBOOK_CSS__*/", css)
         html = html.replace("/*__MORPHBOOK_JS__*/", js.replace("</script", "<\\/script"))

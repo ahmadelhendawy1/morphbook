@@ -9,10 +9,10 @@ the MorphBook engine and the book template are all inlined.
 import json
 import os
 
-from build_book import THEMES, data_uri, load_theme_pack, studio_cover_paths
+from build_book import THEMES, data_uri, engine_js, load_theme_pack, studio_cover_paths
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-VERSION = "1.0.0"
+VERSION = "1.1.0"
 
 
 def read(*p):
@@ -25,7 +25,7 @@ def safe_js(s):
 
 
 def main(out=os.path.join(ROOT, "dist", "studio.html")):
-    css, js, tpl = read("engine", "morphbook.css"), read("engine", "morphbook.js"), read("templates", "book.html")
+    css, js, tpl = read("engine", "morphbook.css"), engine_js(), read("templates", "book.html")
     packs = {path.parent.name: load_theme_pack(path.parent.name) for path in sorted(THEMES.glob("*/theme.css"))}
     covers = {
         subject: {key: data_uri(str(path)) for key, path in paths.items()}

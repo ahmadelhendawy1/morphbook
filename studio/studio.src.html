@@ -70,6 +70,7 @@ main{position:relative;overflow:hidden}
       <div><label class="f" data-t="org"></label><input type="text" id="org"></div></div>
     <div class="row"><div><label class="f" data-t="grade"></label><input type="text" id="grade"></div>
       <div><label class="f" data-t="subject"></label><input type="text" id="subject"></div></div>
+    <label class="f" data-t="yt"></label><input type="text" id="yt" dir="ltr" placeholder="https://www.youtube.com/watch?v=…">
   </fieldset>
 
   <fieldset><legend data-t="look"></legend>
@@ -102,7 +103,7 @@ main{position:relative;overflow:hidden}
   'use strict';
   var T = {
     ar: { tag: 'من PDF لكتاب بيتقلّب بجد', drop1: 'اسحب ملف PDF هنا أو دوس واختار', drop2: 'أو صور الصفحات بالترتيب، أو book.json',
-      book: 'بيانات الكتاب', title: 'عنوان الكتاب', author: 'اسم المؤلف', org: 'المدرسة / الجهة', grade: 'الصف', subject: 'المادة',
+      book: 'بيانات الكتاب', title: 'عنوان الكتاب', author: 'اسم المؤلف', org: 'المدرسة / الجهة', grade: 'الصف', subject: 'المادة', yt: 'لينك فيديو يوتيوب (اختياري) — هيتضاف صفحة فيديو قبل الغلاف الأخير', ytPage: 'فيديو الدرس', ytBad: 'اللينك ده مش لينك يوتيوب',
       look: 'الشكل والصوت', dir: 'اتجاه القراءة', auto: 'تلقائي', rtl: 'من اليمين (عربي)', ltr: 'من الشمال (إنجليزي)',
       quality: 'جودة الصفحات', q1: 'خفيفة', q2: 'عادية', q3: 'عالية', hard: 'غلاف مقوّى للأول والآخر', sound: 'صوت تقليب الورق',
       split: 'قسّم الصفحات المزدوجة (سكان)', export: '⬇️ نزّل الكتاب كملف HTML واحد', exportJson: 'نزّل book.json للتعديل',
@@ -110,7 +111,7 @@ main{position:relative;overflow:hidden}
       ready: 'جاهز! قلّب الكتاب على اليمين 👉', bad: 'الملف ده مش PDF ولا صور', exported: 'اتنزّل ✔',
       note: 'كل حاجة بتحصل جوه المتصفح بتاعك، الملف مش بيترفع على أي سيرفر. الكتاب اللي بينزل بيشتغل من غير نت، على الموبايل والكمبيوتر، وتقدر ترفعه على أي موقع أو منصة.' },
     en: { tag: 'From PDF to a book that really turns', drop1: 'Drop a PDF here or click to choose', drop2: 'or page images in order, or a book.json',
-      book: 'Book details', title: 'Title', author: 'Author', org: 'School / organisation', grade: 'Grade', subject: 'Subject',
+      book: 'Book details', title: 'Title', author: 'Author', org: 'School / organisation', grade: 'Grade', subject: 'Subject', yt: 'YouTube video link (optional) — adds a video page before the back cover', ytPage: 'Lesson video', ytBad: 'That is not a YouTube link',
       look: 'Look and sound', dir: 'Reading direction', auto: 'Automatic', rtl: 'Right to left (Arabic)', ltr: 'Left to right',
       quality: 'Page quality', q1: 'Light', q2: 'Standard', q3: 'High', hard: 'Hard covers on first and last page', sound: 'Paper turning sound',
       split: 'Split scanned two-page spreads', export: '⬇️ Download the book as one HTML file', exportJson: 'Download book.json to edit',
@@ -276,9 +277,12 @@ main{position:relative;overflow:hidden}
       if (hard && (i === 0 || (i === pages.length - 1 && pages.length > 2))) o.hard = true;
       return o;
     });
+    var yt = ytId($('yt').value);
+    if (yt && !list.some(function (p) { return p.type === 'video' && ytId(p.youtube || p.url) === yt; })) { list = list.slice(); list.splice(Math.max(1, list.length - 1), 0, { type: 'video', title: T[ui].ytPage, youtube: yt }); }
     return { meta: meta, pages: list, quiz: imported ? imported.quiz || [] : [] };
   }
 
+  function ytId(s) { s = String(s || '').trim(); var m = s.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/); return m ? m[1] : (/^[\w-]{11}$/.test(s) ? s : ''); }
   var live = null;
   function preparedBook(bookData) {
     var b = Object.assign({}, bookData), m = b.meta = Object.assign({}, b.meta);
@@ -300,10 +304,10 @@ main{position:relative;overflow:hidden}
     themeStyle.textContent = themePack ? packs[themePack].css : '';
     var effects = themePack === 'studio' ? window.MorphBookTheme : undefined;
     var preview = preparedBook(book);
-    live = MorphBook.mount(root, JSON.parse(JSON.stringify(preview)), Object.assign({}, effects, { restore: false }));
+    live = MorphBook.mount(root, JSON.parse(JSON.stringify(preview)), Object.assign({}, effects, { restore: false, studio: true }));
     $('export').disabled = false; $('exportJson').disabled = false;
   }
-  ['title', 'author', 'org', 'grade', 'subject'].forEach(function (k) { var t; $(k).addEventListener('input', function () { clearTimeout(t); t = setTimeout(refresh, 500); }); });
+  ['title', 'author', 'org', 'grade', 'subject', 'yt'].forEach(function (k) { var t; $(k).addEventListener('input', function () { clearTimeout(t); t = setTimeout(refresh, 500); }); });
   ['dir', 'hard', 'sound'].forEach(function (k) { $(k).addEventListener('change', refresh); });
 
   // ---------- export ----------
@@ -314,8 +318,13 @@ main{position:relative;overflow:hidden}
     status(T[ui].exported);
   }
   function slug() { return (book.meta.title || 'book').trim().replace(/[\\/:*?"<>|]+/g, '').replace(/\s+/g, '-') || 'book'; }
+  function withPictures(b) {          // pictures uploaded into picture pages in the preview travel with the book
+    var imgs = live && live.ext && live.ext.images;
+    if (!imgs || !Object.keys(imgs).length) return b;
+    var c = Object.assign({}, b); c.meta = Object.assign({}, b.meta, { images: Object.assign({}, b.meta.images || {}, imgs) }); return c;
+  }
   function standalone(b) {
-    b = preparedBook(b);
+    b = preparedBook(withPictures(b));
     var B = window.__MB__, m = b.meta;
     var pack = Object.hasOwn(packs, m.themePack) ? packs[m.themePack] : {};
     var data = JSON.stringify(b).replace(/<\//g, '<\\/');
@@ -330,7 +339,7 @@ main{position:relative;overflow:hidden}
       .replace('__LANG__', m.lang).replace('__DIR__', m.dir).replace('__VERSION__', B.version);
   }
   $('export').onclick = function () { if (book) download(slug() + '.html', standalone(book), 'text/html'); };
-  $('exportJson').onclick = function () { if (book) download(slug() + '.book.json', JSON.stringify(book, null, 1), 'application/json'); };
+  $('exportJson').onclick = function () { if (book) download(slug() + '.book.json', JSON.stringify(withPictures(book), null, 1), 'application/json'); };
   window.__studio = { standalone: standalone, makeBook: makeBook };
 })();
 </script>
