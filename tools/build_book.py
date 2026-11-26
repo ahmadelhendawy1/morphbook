@@ -90,6 +90,43 @@ def studio_cover_paths():
     }
 
 
+FONTS = Path(ROOT) / "vendor" / "fonts"
+
+
+def fonts_for(meta):
+    """The font families a book's theme and language actually use (see engine/morphbook.css and themes/*/theme.css)."""
+    lang = meta.get("lang", "ar" if meta.get("dir") == "rtl" else "en")
+    theme = meta.get("themePack") or meta.get("theme")
+    if meta.get("themePack") == "studio":
+        fams = {"Baloo Bhaijaan 2", "Nunito"}
+    elif lang == "ar":
+        fams = {"Cairo", "Noto Naskh Arabic"}
+    else:
+        fams = {"Fraunces", "Inter"}
+    if theme == "chalkboard":
+        fams.add("Patrick Hand")
+    return fams
+
+
+def embedded_font_css(meta, book_text=""):
+    """@font-face rules with the font files inlined, so the book looks the same offline.
+    book_text: the book's own page HTML and CSS; any font it names directly (e.g. SVG labels) is embedded too."""
+    faces = json.loads(read(FONTS / "fonts.json"))
+    fams = fonts_for(meta) | {f["family"] for f in faces if f["family"] in book_text}
+    lang = meta.get("lang", "ar" if meta.get("dir") == "rtl" else "en")
+    out = []
+    for f in faces:
+        if f["family"] not in fams:
+            continue
+        if f["subset"] == "arabic" and lang != "ar":
+            continue                      # an English book never needs the Arabic glyphs
+        rule = "@font-face{font-family:'%s';font-style:%s;font-weight:%s;font-display:swap;src:url(%s) format('woff2');%s}" % (
+            f["family"], f["style"], f["weight"], data_uri(str(FONTS / f["file"])).replace("application/octet-stream", "font/woff2"),
+            ("unicode-range:%s;" % f["range"]) if f["range"] else "")
+        out.append(rule)
+    return "\n".join(out)
+
+
 def check(book):
     """Catch the mistakes that make a book fail to open."""
     errors = []
@@ -108,7 +145,7 @@ def check(book):
     return errors
 
 
-def build(src, out, link=False, embed=True):
+def build(src, out, link=False, embed=True, fonts=True):
     book = json.loads(read(src))
     errs = check(book)
     if errs:
@@ -159,6 +196,12 @@ def build(src, out, link=False, embed=True):
     else:
         html = html.replace("/*__MORPHBOOK_CSS__*/", css)
         html = html.replace("/*__MORPHBOOK_JS__*/", js.replace("</script", "<\\/script"))
+    if fonts:
+        # inline the fonts and remove the online font links: the book never needs the internet
+        html = re.sub(r'<link rel="preconnect"[^>]*>\n?', "", html)
+        html = re.sub(r'<link href="https://fonts\.googleapis\.com[^>]*>\n?', "", html)
+        html = html.replace("<style>", "<style>\n" + embedded_font_css(
+            meta, extra_css + "".join(p.get("html", "") for p in book["pages"])) + "\n", 1)
     html = (html.replace("/*__THEME_CSS__*/", pack["css"])
                 .replace("/*__BOOK_CSS__*/", extra_css)
                 .replace("/*__THEME_JS__*/", re.sub("</script", lambda _: r"<\/script", pack["js"], flags=re.I))
@@ -179,5 +222,6 @@ if __name__ == "__main__":
     ap.add_argument("-o", "--out", help="output HTML (default: index.html beside book.json)")
     ap.add_argument("--link", action="store_true", help="link engine files instead of inlining them")
     ap.add_argument("--no-embed", action="store_true", help="do not embed local images")
+    ap.add_argument("--online-fonts", action="store_true", help="load fonts from Google Fonts instead of embedding them")
     a = ap.parse_args()
-    build(a.book, a.out or os.path.join(os.path.dirname(a.book) or ".", "index.html"), a.link, not a.no_embed)
+    build(a.book, a.out or os.path.join(os.path.dirname(a.book) or ".", "index.html"), a.link, not a.no_embed, not a.online_fonts)

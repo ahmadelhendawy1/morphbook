@@ -14,6 +14,7 @@
 | **Morph jumps** | Jumping far (contents, scrubber, Home/End) uses the View Transitions API: the spread swings out and the new one swings in. |
 | **Teaching built in** | Glossary pop-ups (`.term`), activities, callouts, dialogue, a contents page that jumps, read-aloud, an end-of-book quiz with sound and a score badge. |
 | **PDF to flipbook** | `dist/studio.html`: drop a PDF or page images, preview it as a book, download one HTML file. Nothing is uploaded. |
+| **Fully offline** | Every picture, icon, avatar and font is inside the one HTML file (fonts are the SIL OFL files in `vendor/fonts/`, only the families a book uses). Nothing is fetched from the internet. `--online-fonts` switches back to Google Fonts. |
 | **Responsive** | Two-page spreads on wide screens, one page on phones; content scales to fill the paper. Print gives clean pages. |
 
 ## Try it
