@@ -458,7 +458,8 @@
   Book.prototype.stackShadow = function (n, dir) {
     var layers = Math.min(6, Math.ceil(n / 4)), out = [];
     for (var k = 1; k <= layers; k++) {
-      out.push((dir * k * 1.5).toFixed(1) + 'px ' + (k * .8).toFixed(1) + 'px 0 ' + (k % 2 ? '#e8e1d2' : '#d8cfbd'));
+      out.push((dir * k * 1.5).toFixed(1) + 'px ' + (k * .8).toFixed(1) + 'px 0 ' +
+        (k % 2 ? 'var(--stack-light,#e8e1d2)' : 'var(--stack-shade,#d8cfbd)'));
     }
     return out.length ? out.join(',') : '0 0 0 transparent';
   };

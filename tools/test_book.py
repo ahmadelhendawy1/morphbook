@@ -24,8 +24,12 @@ from playwright.async_api import async_playwright
 VIEWS = {"laptop": {"width": 1400, "height": 860}, "phone": {"width": 390, "height": 800}}
 
 
-async def check_view(browser, url, name, view, out):
+async def check_view(browser, url, name, view, out, online_fonts=False):
     page = await browser.new_page(viewport=view, has_touch=(name == "phone"))
+    if not online_fonts:
+        # Match offline readers, which use the fallback fonts in the stylesheet.
+        await page.route("https://fonts.googleapis.com/**",
+                         lambda route: route.fulfill(content_type="text/css", body=""))
     problems, warns = [], []
     page.on("pageerror", lambda e: problems.append("JS error: %s" % e))
     page.on("console", lambda m: (m.type == "error" and problems.append("console error: %s" % m.text))
@@ -43,7 +47,7 @@ async def check_view(browser, url, name, view, out):
         shots.append(path)
     # interaction: drag the recto corner most of the way across
     await page.evaluate("book.cancelTurn(); book.pos = 1 <= book.maxPos() ? 1 : 0; book.render();")
-    await page.wait_for_timeout(200)
+    await page.evaluate("Promise.all(book.bookEl.getAnimations().map(a => a.finished.catch(() => {})))")
     start = await page.evaluate("book.pos")
     box = await page.eval_on_selector(".mb-slot.recto", "e => { const r = e.getBoundingClientRect(); return [r.left, r.top, r.width, r.height]; }")
     x0 = box[0] + (6 if info["rtl"] else box[2] - 6)
@@ -87,6 +91,7 @@ async def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("html")
     ap.add_argument("--chrome", help="path to an installed Chrome/Edge if Playwright's Chromium is missing")
+    ap.add_argument("--online-fonts", action="store_true", help="also load the optional Google Fonts stylesheet")
     a = ap.parse_args()
     html = os.path.abspath(a.html)
     out = os.path.splitext(html)[0] + ".check"
@@ -98,7 +103,9 @@ async def main():
         browser = await p.chromium.launch(**kw)
         report, bad = {}, False
         for name, view in VIEWS.items():
-            info, problems, warns, sheet = await check_view(browser, "file:///" + html.replace(os.sep, "/").lstrip("/"), name, view, out)
+            info, problems, warns, sheet = await check_view(
+                browser, "file:///" + html.replace(os.sep, "/").lstrip("/"), name, view, out, a.online_fonts
+            )
             report[name] = {"info": info, "problems": problems, "too_long": warns, "sheet": sheet}
             bad = bad or bool(problems)
             print("%-6s %s spreads=%s pages=%d  problems=%d  too-long=%d  sheet=%s" % (

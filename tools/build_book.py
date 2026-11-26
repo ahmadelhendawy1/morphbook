@@ -15,10 +15,22 @@ import base64
 import json
 import mimetypes
 import os
+import re
 import sys
+from pathlib import Path
+from urllib.parse import unquote, urlsplit
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 VERSION = "1.0.0"
+THEMES = Path(ROOT) / "themes"
+STUDIO_SUBJECTS = ("space", "ocean", "nature", "maths", "language", "history")
+CSS_URL = re.compile(
+    r"/\*.*?\*/|\"(?:\\.|[^\"\\])*\"|'(?:\\.|[^'\\])*'"
+    r"|(?<![\w-])url\(\s*(?:\"(?P<double>(?:\\.|[^\"\\])*)\""
+    r"|'(?P<single>(?:\\.|[^'\\])*)'|(?P<bare>(?:\\.|[^\s()'\"])*)"
+    r")\s*\)",
+    re.IGNORECASE | re.DOTALL,
+)
 
 
 def read(path):
@@ -32,6 +44,46 @@ def data_uri(path):
         mime = "image/webp"
     with open(path, "rb") as f:
         return "data:%s;base64,%s" % (mime, base64.b64encode(f.read()).decode("ascii"))
+
+
+def load_theme_pack(name):
+    if not isinstance(name, str) or not re.fullmatch(r"[a-z0-9][a-z0-9_-]*", name):
+        raise ValueError("invalid themePack name: %r" % name)
+    directory = (THEMES / name).resolve()
+    stylesheet = (directory / "theme.css").resolve()
+    if directory.parent != THEMES.resolve() or stylesheet.parent != directory or not stylesheet.is_file():
+        raise ValueError("missing theme pack: %s" % name)
+
+    def embed_url(match):
+        value = next((part for part in match.groups() if part is not None), "")
+        if not value or value.startswith(("/", "#")) or re.match(r"^[a-z][a-z0-9+.-]*:", value, re.I):
+            return match[0]
+        value = re.sub(r"\\([\s()'\"\\])", r"\1", value)
+        url = urlsplit(value)
+        path = (directory / unquote(url.path)).resolve()
+        if not path.is_relative_to(directory) or not path.is_file():
+            raise ValueError("missing or invalid asset in theme pack %s: %s" % (name, value))
+        uri = data_uri(str(path))
+        if url.fragment:
+            uri += "#" + url.fragment
+        return "url(%s)" % json.dumps(uri, ensure_ascii=False)
+
+    css = CSS_URL.sub(embed_url, read(stylesheet))
+    css = re.sub(r"</(?=style\b)", lambda _: r"\3c /", css, flags=re.I)
+    effects = directory / "fx.js"
+    return {"css": css, "js": read(effects) if effects.is_file() else ""}
+
+
+def studio_cover_paths():
+    directory = THEMES / "studio" / "img"
+    return {
+        subject: {
+            key: directory / ("%s-%s.webp" % (side, subject))
+            for key, side in (("coverImage", "cover"), ("backImage", "back"))
+            if (directory / ("%s-%s.webp" % (side, subject))).is_file()
+        }
+        for subject in STUDIO_SUBJECTS
+    }
 
 
 def check(book):
@@ -67,6 +119,19 @@ def build(src, out, link=False, embed=True):
                     sys.exit("missing image: %s" % path)
                 p["image"] = data_uri(path)
     meta = book.get("meta", {})
+    pack = {"css": "", "js": ""}
+    if "themePack" in meta:
+        try:
+            pack = load_theme_pack(meta["themePack"])
+        except ValueError as error:
+            sys.exit(str(error))
+        meta["theme"] = meta["themePack"]
+        if meta["themePack"] == "studio" and meta.get("subjectTag") in STUDIO_SUBJECTS:
+            for key, path in studio_cover_paths()[meta["subjectTag"]].items():
+                if not meta.get(key):
+                    meta[key] = data_uri(str(path)) if embed else Path(
+                        os.path.relpath(path, os.path.dirname(os.path.abspath(out)))
+                    ).as_posix()
     if embed:
         for key in ("coverImage", "backImage", "paperImage"):
             img = meta.get(key)
@@ -90,7 +155,9 @@ def build(src, out, link=False, embed=True):
     else:
         html = html.replace("/*__MORPHBOOK_CSS__*/", css)
         html = html.replace("/*__MORPHBOOK_JS__*/", js.replace("</script", "<\\/script"))
-    html = (html.replace("/*__BOOK_CSS__*/", extra_css)
+    html = (html.replace("/*__THEME_CSS__*/", pack["css"])
+                .replace("/*__BOOK_CSS__*/", extra_css)
+                .replace("/*__THEME_JS__*/", re.sub("</script", lambda _: r"<\/script", pack["js"], flags=re.I))
                 .replace("__BOOK_JSON__", data)
                 .replace("__BOOK_TITLE__", title)
                 .replace("__LANG__", lang)

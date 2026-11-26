@@ -6,7 +6,7 @@
 <title>MorphBook Studio · حوّل الـPDF لكتاب تفاعلي</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Noto+Naskh+Arabic:wght@400;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Inter:wght@400;600;800&family=Patrick+Hand&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;600;700;800&family=Cairo:wght@400;600;700;800&family=Noto+Naskh+Arabic:wght@400;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Inter:wght@400;600;800&family=Nunito:wght@400;600;700;800&family=Patrick+Hand&display=swap" rel="stylesheet">
 <style>
 /*__MB_CSS__*/
 :root{--s-bg:#0f1420;--s-panel:#171e2d;--s-line:#273149;--s-ink:#e9eef7;--s-soft:#9aa6bd;--s-acc:#5b9dff;--s-acc2:#7c5cff;--s-ok:#3ddc97}
@@ -96,6 +96,7 @@ main{position:relative;overflow:hidden}
 <script>/*__PDFWORKER__*/</script>
 <script>/*__MB_JS__*/</script>
 <script>/*__MB_BUNDLE__*/</script>
+<script>/*__STUDIO_FX__*/</script>
 <script>
 (function () {
   'use strict';
@@ -120,8 +121,18 @@ main{position:relative;overflow:hidden}
   var THEMES = [['classic', '#2f5fa8', '#16305e'], ['ocean', '#0f5c80', '#062a44'], ['nature', '#2f6b3e', '#173a22'], ['cosmic', '#3b1d73', '#0d0726'],
     ['sunset', '#c2522b', '#6d1f3d'], ['vintage', '#6b3f22', '#33190b'], ['blossom', '#c45a7c', '#6e2341'], ['arctic', '#7fb5cf', '#2c5d78'],
     ['royal', '#4b1f6e', '#1f0a33'], ['desert', '#b9822f', '#5e3a12'], ['chalkboard', '#24382e', '#5b3a22'], ['blueprint', '#123a63', '#061a30']];
-  var ui = 'ar', theme = 'ocean', pages = [], aspect = .72, detected = 'ltr', book = null, srcName = 'book', imported = null;
+  var packs = window.__MB__.packs;
+  if (Object.hasOwn(packs, 'studio')) THEMES.push(['studio', '#82CAFA', '#B84559']);
+  var ui = 'ar', theme = 'ocean', themePack, pages = [], aspect = .72, detected = 'ltr', book = null, srcName = 'book', imported = null;
   var $ = function (id) { return document.getElementById(id); };
+  var themeStyle = document.createElement('style');
+  document.head.appendChild(themeStyle);
+
+  function updateSwatches() {
+    Array.prototype.forEach.call($('themes').children, function (button) {
+      button.setAttribute('aria-pressed', String(button.dataset.theme === (themePack || theme)));
+    });
+  }
 
   function applyLang() {
     document.documentElement.lang = ui; document.documentElement.dir = ui === 'ar' ? 'rtl' : 'ltr';
@@ -132,10 +143,14 @@ main{position:relative;overflow:hidden}
   THEMES.forEach(function (t) {
     var b = document.createElement('button'); b.type = 'button'; b.title = t[0];
     b.style.background = 'linear-gradient(135deg,' + t[1] + ',' + t[2] + ')';
-    b.setAttribute('aria-pressed', String(t[0] === theme));
-    b.onclick = function () { theme = t[0]; Array.prototype.forEach.call($('themes').children, function (x) { x.setAttribute('aria-pressed', String(x === b)); }); refresh(); };
+    b.dataset.theme = t[0];
+    b.onclick = function () {
+      themePack = Object.hasOwn(packs, t[0]) ? t[0] : undefined;
+      theme = t[0]; updateSwatches(); refresh();
+    };
     $('themes').appendChild(b);
   });
+  updateSwatches();
   applyLang();
 
   function status(s, pct) { $('status').textContent = s; if (pct != null) $('bar').style.width = pct + '%'; }
@@ -232,9 +247,12 @@ main{position:relative;overflow:hidden}
 
   function fromJson(f) {
     f.text().then(function (t) {
-      imported = JSON.parse(t); var m = imported.meta || {};
+      var next = JSON.parse(t), m = next.meta || {};
+      if ('themePack' in m && !Object.hasOwn(packs, m.themePack)) throw new Error('Unknown theme pack: ' + m.themePack);
+      imported = next;
       ['title', 'author', 'org', 'grade', 'subject'].forEach(function (k) { if (m[k]) $(k).value = m[k]; });
       if (m.theme) theme = m.theme; if (m.dir) $('dir').value = m.dir;
+      themePack = m.themePack; updateSwatches();
       pages = []; refresh(); status(T[ui].ready, 100);
     }).catch(function (e) { status('⚠️ ' + e.message, 0); });
   }
@@ -247,7 +265,7 @@ main{position:relative;overflow:hidden}
       id: ($('title').value || srcName).trim().replace(/\s+/g, '-').toLowerCase(),
       title: $('title').value || srcName, author: $('author').value || undefined, org: $('org').value || undefined,
       grade: $('grade').value || undefined, subject: $('subject').value || undefined,
-      lang: lang, dir: dir, theme: theme, sound: { enabled: $('sound').checked, volume: .7 }
+      lang: lang, dir: dir, theme: themePack || theme, themePack: themePack, sound: { enabled: $('sound').checked, volume: .7 }
     });
     if (!imported) meta.aspect = aspect;
     var list;
@@ -262,6 +280,16 @@ main{position:relative;overflow:hidden}
   }
 
   var live = null;
+  function preparedBook(bookData) {
+    var b = Object.assign({}, bookData), m = b.meta = Object.assign({}, b.meta);
+    if (m.themePack && Object.hasOwn(packs, m.themePack)) m.theme = m.themePack;
+    if (m.themePack === 'studio' && Object.hasOwn(window.__MB__.studioCovers, m.subjectTag)) {
+      var art = window.__MB__.studioCovers[m.subjectTag];
+      if (!m.coverImage && art.coverImage) m.coverImage = art.coverImage;
+      if (!m.backImage && art.backImage) m.backImage = art.backImage;
+    }
+    return b;
+  }
   function refresh() {
     if (!pages.length && !imported) return;
     book = makeBook();
@@ -269,7 +297,10 @@ main{position:relative;overflow:hidden}
     if (live) live.destroy();
     var host = $('preview'); host.innerHTML = '';
     var root = document.createElement('div'); root.style.cssText = 'position:absolute;inset:0'; host.appendChild(root);
-    live = MorphBook.mount(root, JSON.parse(JSON.stringify(book)), { restore: false });
+    themeStyle.textContent = themePack ? packs[themePack].css : '';
+    var effects = themePack === 'studio' ? window.MorphBookTheme : undefined;
+    var preview = preparedBook(book);
+    live = MorphBook.mount(root, JSON.parse(JSON.stringify(preview)), Object.assign({}, effects, { restore: false }));
     $('export').disabled = false; $('exportJson').disabled = false;
   }
   ['title', 'author', 'org', 'grade', 'subject'].forEach(function (k) { var t; $(k).addEventListener('input', function () { clearTimeout(t); t = setTimeout(refresh, 500); }); });
@@ -284,12 +315,16 @@ main{position:relative;overflow:hidden}
   }
   function slug() { return (book.meta.title || 'book').trim().replace(/[\\/:*?"<>|]+/g, '').replace(/\s+/g, '-') || 'book'; }
   function standalone(b) {
+    b = preparedBook(b);
     var B = window.__MB__, m = b.meta;
+    var pack = Object.hasOwn(packs, m.themePack) ? packs[m.themePack] : {};
     var data = JSON.stringify(b).replace(/<\//g, '<\\/');
     return B.tpl
       .replace('/*__MORPHBOOK_CSS__*/', function () { return B.css; })
-      .replace('/*__BOOK_CSS__*/', '')
+      .replace('/*__THEME_CSS__*/', function () { return pack.css || ''; })
+      .replace('/*__BOOK_CSS__*/', function () { return b.css || ''; })
       .replace('/*__MORPHBOOK_JS__*/', function () { return B.js; })
+      .replace('/*__THEME_JS__*/', function () { return (pack.js || '').replace(/<\/script/gi, '<\\/script'); })
       .replace('__BOOK_JSON__', function () { return data; })
       .replace('__BOOK_TITLE__', function () { return String(m.title || 'Book').replace(/</g, '&lt;'); })
       .replace('__LANG__', m.lang).replace('__DIR__', m.dir).replace('__VERSION__', B.version);

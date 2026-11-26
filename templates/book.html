@@ -7,11 +7,12 @@
 <meta name="generator" content="MorphBook __VERSION__">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Noto+Naskh+Arabic:wght@400;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Inter:wght@400;600;800&family=Patrick+Hand&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;600;700;800&family=Cairo:wght@400;600;700;800&family=Noto+Naskh+Arabic:wght@400;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Inter:wght@400;600;800&family=Nunito:wght@400;600;700;800&family=Patrick+Hand&display=swap" rel="stylesheet">
 <style>
 html,body{height:100%;margin:0}
 #book{position:fixed;inset:0}
 /*__MORPHBOOK_CSS__*/
+/*__THEME_CSS__*/
 /*__BOOK_CSS__*/
 </style>
 </head>
@@ -22,7 +23,8 @@ html,body{height:100%;margin:0}
 /*__MORPHBOOK_JS__*/
 </script>
 <script>
-window.book = MorphBook.mount('#book', JSON.parse(document.getElementById('book-data').textContent));
+/*__THEME_JS__*/
+window.book = MorphBook.mount('#book', JSON.parse(document.getElementById('book-data').textContent), window.MorphBookTheme);
 </script>
 </body>
 </html>

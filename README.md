@@ -44,6 +44,18 @@ python tools/test_book.py dist/my-book.html     # every spread on a laptop and a
 
 `python tools/build_all.py` rebuilds every example, the studio and the shelf.
 
+## Studio theme
+
+Choose **Studio** in the flipbook editor or add `"themePack": "studio"` to a book's metadata.
+The demo at `dist/books/studio-demo.html` shows the Arabic solar-system lesson with character dialogue,
+illustrated covers, and the game-show quiz. The cover art, badges, and avatars ship inside the exported book.
+
+[Studio cover options](themes/studio/README.md) · [Watch the demo](docs/img/studio-demo.webm)
+
+![Studio's lightbulb, magnifier, warning, and trophy badges](docs/img/studio-icons.webp)
+
+![Six Studio covers shown in the flipbook reader](docs/img/studio-covers.webp)
+
 ## The skill
 
 `skill/morphbook/` is an agent skill (Claude Code, Codex, Claude app). It **interviews the teacher** (source, class, language and dialect, story and characters, interactivity, look and sound, credits), writes the book with narrative techniques (hooks, characters, dialogue, cliffhangers, key terms, activities), builds it with the tools above, tests it in a browser and delivers one HTML file. See [skill/morphbook/SKILL.md](skill/morphbook/SKILL.md).

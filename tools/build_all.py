@@ -18,6 +18,7 @@ COVERS = {"classic": ("#2f5fa8", "#16305e"), "ocean": ("#0f5c80", "#062a44"), "n
           "cosmic": ("#3b1d73", "#0d0726"), "sunset": ("#c2522b", "#6d1f3d"), "vintage": ("#6b3f22", "#33190b"),
           "blossom": ("#c45a7c", "#6e2341"), "arctic": ("#7fb5cf", "#2c5d78"), "royal": ("#4b1f6e", "#1f0a33"),
           "desert": ("#b9822f", "#5e3a12"), "chalkboard": ("#24382e", "#5b3a22"), "blueprint": ("#123a63", "#061a30")}
+COVERS["studio"] = ("#5743A0", "#2B2340")
 
 
 def main():
@@ -34,7 +35,7 @@ def main():
     build_studio.main(os.path.join(DIST, "studio.html"))
     cards = []
     for name, m in books:
-        c1, c2 = COVERS.get(m.get("theme", "classic"), COVERS["classic"])
+        c1, c2 = COVERS.get(m.get("themePack", m.get("theme", "classic")), COVERS["classic"])
         cards.append(
             '<a class="book" href="books/%s.html" dir="%s" style="--c1:%s;--c2:%s"><span class="ic">%s</span>'
             '<b>%s</b><small>%s</small></a>' % (

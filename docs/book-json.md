@@ -22,6 +22,8 @@ One file describes a book. `tools/build_book.py` turns it into one HTML file.
 | `lang` | `ar` or `en` (labels, fonts, voice) |
 | `dir` | `rtl` or `ltr` (binding side and turning direction) |
 | `theme` | `classic` `ocean` `nature` `cosmic` `sunset` `vintage` `blossom` `arctic` `royal` `desert` `chalkboard` `blueprint` |
+| `themePack` | folder slug under `themes/`, e.g. `studio`. The builder sets `data-theme` on the reader and inlines the pack's stylesheet and relative assets. |
+| `subjectTag` | Studio cover pair: `space`, `ocean`, `nature`, `maths`, `language`, or `history`. Explicit `coverImage` and `backImage` take precedence. |
 | `hue`, `accent` | optional overrides: a hue number (0–360) or any CSS colour |
 | `aspect` | page width ÷ height (0.72 default; a PDF's own ratio from `pdf_to_book.py`) |
 | `sound` | `{ "enabled": true, "volume": 0.7, "url": "optional-own-clip.mp3" }` |
@@ -53,6 +55,7 @@ Index 0 is the front cover. On wide screens page 0 sits alone, then pages 1–2,
 | `<p class="hook">` | the opening question or scene, italic accent |
 | `<p class="lead">` | paragraph with a drop cap |
 | `<p class="dlg"><b>Name</b>“line”</p>` | dialogue line |
+| `<p class="dlg" data-who="mariam" data-mood="curious">` | Studio dialogue avatar. Use `youssef`, `mariam`, or `negm` for `data-who`. The default mood is `happy`; `curious` and `surprised` select the other expressions. |
 | `<span class="term" data-def="…">word</span>` | glossary word with a pop-up definition |
 | `<div class="kterm"><b>Term</b><span>…</span></div>` | key-term card |
 | `<div class="callout tone-tip|tone-warning|tone-example"><b>Title</b><span>…</span></div>` | callout |
