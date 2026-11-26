@@ -1,0 +1,7 @@
+*.check/
+__pycache__/
+*.pyc
+books/
+*.pdf
+.DS_Store
+node_modules/

@@ -1,0 +1,45 @@
+{
+  "meta": {
+    "id": "cells-en",
+    "title": "Universes Within",
+    "subtitle": "The Amazing World of Cells",
+    "author": "Dr. Sarah Ahmed",
+    "org": "Future Academy",
+    "grade": "Grade 7",
+    "subject": "Biology",
+    "lang": "en",
+    "dir": "ltr",
+    "theme": "cosmic",
+    "icon": "🔬",
+    "aspect": 0.72,
+    "sound": { "enabled": true, "volume": 0.7 },
+    "blurb": "Every living thing is a galaxy of tiny worlds. This is their story."
+  },
+  "pages": [
+    { "type": "cover" },
+    { "type": "html", "title": "Dedication",
+      "html": "<div class=\"pg dedication\"><div class=\"quotemark\" aria-hidden=\"true\">“</div><p class=\"ded\">To the scientists of tomorrow, who still ask why.</p><p class=\"sign\">Sarah Ahmed</p><div class=\"pgnum\">2</div></div>" },
+    { "type": "html", "title": "Contents",
+      "html": "<div class=\"pg\"><h2>Contents</h2><p class=\"tag\">Tap a title to jump there</p><ul class=\"toc\"><li class=\"chap\">Chapter 1 · The Discovery</li><li><button class=\"tocrow\" data-goto=\"3\"><span>A drop of pond water</span><b>4</b></button></li><li class=\"chap\">Chapter 2 · Inside the Cell</li><li><button class=\"tocrow\" data-goto=\"4\"><span>The city in a cell</span><b>5</b></button></li><li><button class=\"tocrow\" data-goto=\"5\"><span>Power plants</span><b>6</b></button></li><li class=\"chap\">Chapter 3 · Two Kingdoms</li><li><button class=\"tocrow\" data-goto=\"6\"><span>Plant or animal?</span><b>7</b></button></li><li><button class=\"tocrow\" data-goto=\"7\"><span>Knowledge check</span><b>8</b></button></li></ul><div class=\"pgnum\">3</div></div>" },
+    { "type": "html", "chapter": "Chapter 1 · The Discovery", "title": "A drop of pond water",
+      "html": "<div class=\"pg\"><h2>A drop of pond water</h2><p class=\"hook\">What if a single drop of water held more life than a whole city?</p><p class=\"lead\">Maya squinted into the microscope. The drop she had scooped from the school pond was not empty at all. Tiny shapes spun, wriggled and raced across the glass.</p><p class=\"dlg\"><b>Maya</b>“They're alive, Omar. Every one of them.”</p><p class=\"dlg\"><b>Omar</b>“So what are they made of?”</p><p>In 1665 Robert Hooke asked the same question. Looking at cork, he saw little rooms and called them <span class=\"term\" data-def=\"The smallest unit of life. Every living thing is made of one or more cells.\">cells</span>.</p><p class=\"cliff\">But what was hiding inside those rooms?</p><div class=\"pgnum\">4</div></div>" },
+    { "type": "html", "chapter": "Chapter 2 · Inside the Cell", "title": "The city in a cell",
+      "html": "<div class=\"pg\"><h2>The city in a cell</h2><p class=\"hook\">Picture a busy city, shrunk a million times.</p><ul><li><b>Cell membrane</b>: the city wall, deciding what gets in and out.</li><li><b><span class=\"term\" data-def=\"The control centre of the cell. It holds the DNA, the instructions for building and running the cell.\">Nucleus</span></b>: city hall, holding the instruction book (DNA).</li><li><b>Cytoplasm</b>: the streets, a jelly where everything moves.</li><li><b>Ribosomes</b>: factories that build proteins.</li></ul><div class=\"callout tone-tip\"><b>Think about it</b><span>If the nucleus is city hall, what happens to a city that loses its plans?</span></div><div class=\"pgnum\">5</div></div>" },
+    { "type": "html", "chapter": "Chapter 2 · Inside the Cell", "title": "Power plants",
+      "html": "<div class=\"pg\"><h2>Power plants</h2><div class=\"emoji-hero\">⚡</div><p class=\"lead\">Every city needs power. In a cell, the power plants are the <span class=\"term\" data-def=\"Organelles that release energy from food during cellular respiration.\">mitochondria</span>.</p><div class=\"eq\"><code>glucose + oxygen → energy + CO₂ + water</code></div><p>Your muscle cells are packed with mitochondria, because running and jumping need lots of energy.</p><div class=\"activity\"><b>Try it</b><p>Do 20 jumping jacks. Why are you breathing faster? Where is that oxygen going?</p></div><div class=\"pgnum\">6</div></div>" },
+    { "type": "html", "chapter": "Chapter 3 · Two Kingdoms", "title": "Plant or animal?",
+      "html": "<div class=\"pg\"><h2>Plant or animal?</h2><p class=\"hook\">Omar held up a leaf. “Same city?” Maya grinned. “Same city, extra buildings.”</p><div class=\"kterm\"><b>Plant cells also have</b><span>a stiff <b>cell wall</b>, a big <b>vacuole</b> for water, and <span class=\"term\" data-def=\"Green organelles that capture sunlight to make food by photosynthesis.\">chloroplasts</span> to make food from sunlight.</span></div><div class=\"callout tone-example\"><b>Spot the difference</b><span>Animal cells are rounder and flexible; plant cells look like neat green bricks.</span></div><p class=\"cliff\">Ready to prove you can tell them apart?</p><div class=\"pgnum\">7</div></div>" },
+    { "type": "html", "title": "Knowledge check",
+      "html": "<div class=\"pg fill\"><h2>Knowledge check</h2><div class=\"emoji-hero\">🧪</div><p style=\"text-align:center\">Five questions. Your best score shows at the top.</p><button class=\"qbtn\" data-quiz=\"1\">Start the quiz</button><div class=\"pgnum\">8</div></div>" },
+    { "type": "html", "title": "About the author",
+      "html": "<div class=\"pg fill\" style=\"text-align:center\"><h2>About the author</h2><div class=\"emoji-hero\">👩‍🔬</div><h3>Dr. Sarah Ahmed</h3><p>A biology teacher at Future Academy who believes every student is a scientist who hasn't met the right question yet.</p><div class=\"pgnum\">9</div></div>" },
+    { "type": "back" }
+  ],
+  "quiz": [
+    { "q": "Who first named cells?", "options": ["Robert Hooke", "Isaac Newton", "Marie Curie", "Charles Darwin"], "a": "Robert Hooke", "explanation": "Hooke saw little rooms in cork in 1665 and called them cells." },
+    { "q": "Which part holds the cell's DNA?", "options": ["Nucleus", "Cell membrane", "Cytoplasm", "Vacuole"], "a": "Nucleus", "explanation": "The nucleus is the control centre and stores DNA." },
+    { "q": "What do mitochondria do?", "options": ["Release energy from food", "Make food from sunlight", "Store water", "Build the cell wall"], "a": "Release energy from food", "explanation": "Mitochondria release energy during cellular respiration." },
+    { "q": "Which is found in plant cells but not animal cells?", "options": ["Chloroplasts", "Ribosomes", "Cell membrane", "Cytoplasm"], "a": "Chloroplasts", "explanation": "Chloroplasts capture sunlight for photosynthesis." },
+    { "q": "Why do muscle cells have many mitochondria?", "options": ["They need lots of energy", "They make food", "They store DNA", "They are plant cells"], "a": "They need lots of energy", "explanation": "Movement uses a lot of energy, so muscles need many power plants." }
+  ]
+}
