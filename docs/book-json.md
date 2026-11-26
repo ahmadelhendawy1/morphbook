@@ -62,6 +62,7 @@ Index 0 is the front cover. On wide screens page 0 sits alone, then pages 1–2,
 | `<div class="activity"><b>Try it</b><p>…</p></div>` | activity box |
 | `<div class="eq"><code>…</code></div>` | an equation (always left to right) |
 | `<div class="emoji-hero">🌋</div>` | big illustration emoji |
+| `<span class="ico ico-space"></span>` · `<span class="ico ico-xl ico-science"></span>` | Studio theme only: 3D subject icon inline, or large and centred. Names: science, maths, arabic, english, history, geography, art, music, sports, computer, space, ocean, plants, animals, human-body, chemistry, physics, reading, star, target, lightbulb, magnifier, warning, quiz-trophy |
 | `<p class="cliff">` | cliffhanger at the foot of a page |
 | `<ul class="toc">` with `<button class="tocrow" data-goto="4">` | contents page; `data-goto` is the 0-based page index |
 | `<button class="qbtn" data-quiz="1">` | opens the quiz |

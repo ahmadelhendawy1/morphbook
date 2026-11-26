@@ -26,5 +26,6 @@ The Studio design lives in Figma: **MorphBook · Studio Theme** — https://www.
 | Colors | 27 variables in the "Studio" collection, Light and Dark modes, code syntax `var(--name)` | the token block at the top of `theme.css` |
 | Icons | 11 toolbar icon components `icon/<name>`, 24×24, stroke 2.2 | `icons.js` (passed to the engine as `opts.icons`) |
 | Mockup | one RTL book spread built from those variables and icon instances | design reference for `theme.css` |
+| Subject Icons | 20 3D clay subject icons (1024px sources, generated in Figma) | `icons/*.webp` at 128px, used with `<span class="ico ico-NAME"></span>` |
 
 To change an icon: edit its component in Figma, copy its path data into `icons.js`, rebuild, run `tools/test_book.py`.

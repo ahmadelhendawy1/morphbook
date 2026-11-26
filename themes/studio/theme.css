@@ -532,3 +532,33 @@
 
 /* Toolbar icons come from Figma (themes/studio/icons.js) and are drawn at their designed stroke */
 .mb-root[data-theme="studio"] .mb-tool svg { stroke-width: 2.2; }
+
+/* Subject icons (3D clay, made in Figma). Use in a page: <span class="ico ico-space"></span>
+   or a bigger badge: <span class="ico ico-xl ico-science"></span>. Names: animals, arabic, art, chemistry, computer, english, geography, history, human-body, lightbulb, magnifier, maths, music, ocean, physics, plants, quiz-trophy, reading, science, space, sports, star, target, warning */
+.mb-root[data-theme="studio"] .ico { display: inline-block; width: 2.2em; height: 2.2em; vertical-align: middle;
+  background: center / contain no-repeat; filter: drop-shadow(0 4px 6px rgb(61 42 105 / 18%)); }
+.mb-root[data-theme="studio"] .ico-xl { display: block; width: 5.5em; height: 5.5em; margin: .2em auto .6em; }
+.mb-root[data-theme="studio"] .ico-animals { background-image: url("icons/animals.webp"); }
+.mb-root[data-theme="studio"] .ico-arabic { background-image: url("icons/arabic.webp"); }
+.mb-root[data-theme="studio"] .ico-art { background-image: url("icons/art.webp"); }
+.mb-root[data-theme="studio"] .ico-chemistry { background-image: url("icons/chemistry.webp"); }
+.mb-root[data-theme="studio"] .ico-computer { background-image: url("icons/computer.webp"); }
+.mb-root[data-theme="studio"] .ico-english { background-image: url("icons/english.webp"); }
+.mb-root[data-theme="studio"] .ico-geography { background-image: url("icons/geography.webp"); }
+.mb-root[data-theme="studio"] .ico-history { background-image: url("icons/history.webp"); }
+.mb-root[data-theme="studio"] .ico-human-body { background-image: url("icons/human-body.webp"); }
+.mb-root[data-theme="studio"] .ico-lightbulb { background-image: url("icons/lightbulb.webp"); }
+.mb-root[data-theme="studio"] .ico-magnifier { background-image: url("icons/magnifier.webp"); }
+.mb-root[data-theme="studio"] .ico-maths { background-image: url("icons/maths.webp"); }
+.mb-root[data-theme="studio"] .ico-music { background-image: url("icons/music.webp"); }
+.mb-root[data-theme="studio"] .ico-ocean { background-image: url("icons/ocean.webp"); }
+.mb-root[data-theme="studio"] .ico-physics { background-image: url("icons/physics.webp"); }
+.mb-root[data-theme="studio"] .ico-plants { background-image: url("icons/plants.webp"); }
+.mb-root[data-theme="studio"] .ico-quiz-trophy { background-image: url("icons/quiz-trophy.webp"); }
+.mb-root[data-theme="studio"] .ico-reading { background-image: url("icons/reading.webp"); }
+.mb-root[data-theme="studio"] .ico-science { background-image: url("icons/science.webp"); }
+.mb-root[data-theme="studio"] .ico-space { background-image: url("icons/space.webp"); }
+.mb-root[data-theme="studio"] .ico-sports { background-image: url("icons/sports.webp"); }
+.mb-root[data-theme="studio"] .ico-star { background-image: url("icons/star.webp"); }
+.mb-root[data-theme="studio"] .ico-target { background-image: url("icons/target.webp"); }
+.mb-root[data-theme="studio"] .ico-warning { background-image: url("icons/warning.webp"); }
