@@ -1,0 +1,215 @@
+{
+ "meta": {
+  "id": "solar-system-ar",
+  "title": "رحلة إلى المجموعة الشمسية",
+  "subtitle": "يوسف ومريم والروبوت نجم بين الكواكب",
+  "author": "أحمد الهنداوي",
+  "org": "AI4EduTech",
+  "grade": "المرحلة الابتدائية",
+  "subject": "علوم",
+  "lang": "ar",
+  "dir": "rtl",
+  "theme": "cosmic",
+  "icon": "🪐",
+  "aspect": 0.72,
+  "voiceLang": "ar-EG",
+  "sound": {
+   "enabled": true,
+   "volume": 0.7
+  },
+  "blurb": "٨ كواكب، وقمر، وروبوت اسمه نجم… والرحلة لسه مكمّلة معاك."
+ },
+ "pages": [
+  {
+   "type": "cover",
+   "title": "الغلاف"
+  },
+  {
+   "type": "html",
+   "title": "إهداء",
+   "html": "<div class=\"pg dedication\"><div class=\"quotemark\" aria-hidden=\"true\">”</div><p class=\"ded\">لكل طفل بيبص للسما بالليل ويسأل: يا ترى فيه إيه هناك؟ الكتاب ده ليك.</p><p class=\"sign\">أحمد الهنداوي</p><div class=\"pgnum\">٢</div></div>",
+   "narration": "إهداء. لكل طفل بيبص للسما بالليل ويسأل: يا ترى فيه إيه هناك؟ الكتاب ده ليك."
+  },
+  {
+   "type": "html",
+   "title": "محتويات الرحلة",
+   "html": "<div class=\"pg \"><h2>محتويات الرحلة</h2><p class=\"tag\">دوس على أي عنوان وهتطير له على طول 🚀</p><ul class=\"toc\"><li class=\"chap\">البداية</li><li><button class=\"tocrow\" data-goto=\"3\"><span>رسالة من التلسكوب</span><b>٤</b></button></li><li class=\"chap\">الفصل الأول: نجمنا الكبير</li><li><button class=\"tocrow\" data-goto=\"4\"><span>الشمس · عيلة الشمس</span><b>٥</b></button></li><li class=\"chap\">الفصل الثاني: الكواكب الصخرية</li><li><button class=\"tocrow\" data-goto=\"6\"><span>جيران قريبين · الأرض بيتنا</span><b>٧</b></button></li><li class=\"chap\">الفصل الثالث: العمالقة</li><li><button class=\"tocrow\" data-goto=\"8\"><span>الكواكب العملاقة · تحدّي الأحجام</span><b>٩</b></button></li><li class=\"chap\">الفصل الرابع: الأرض والقمر</li><li><button class=\"tocrow\" data-goto=\"10\"><span>القمر وأطواره · الليل والنهار والفصول</span><b>١١</b></button></li><li class=\"chap\">الفصل الخامس: لسه الرحلة مكمّلة</li><li><button class=\"tocrow\" data-goto=\"12\"><span>عيون على الفضاء · اختبار رائد الفضاء</span><b>١٣</b></button></li></ul><div class=\"pgnum\">٣</div></div>"
+  },
+  {
+   "type": "html",
+   "chapter": "البداية",
+   "title": "رسالة من التلسكوب",
+   "html": "<div class=\"pg \"><h2>رسالة من التلسكوب</h2><p class=\"hook\">الساعة ١٢ بالليل… والتلسكوب اللي فوق السطح بدأ يصفّر لوحده!</p><div class=\"emoji-hero\">🔭🤖</div><p class=\"lead\">طلع يوسف ومريم يجروا، لقوا روبوت صغير بعيون منوّرة واقف جنب التلسكوب. قال لهم: «أنا نجم، روبوت مستكشف، ومحتاج مساعدين شطار للرحلة الأكبر في حياتهم.»</p><p class=\"dlg\"><b>مريم</b>«رحلة لفين يا نجم؟»</p><p class=\"dlg\"><b>نجم</b>«لعيلة الشمس كلها… ٨ كواكب، وقمر، وأسرار كتير!»</p><p class=\"cliff\">ربطوا الأحزمة… والعدّ التنازلي بدأ: ٣… ٢… ١…</p><div class=\"pgnum\">٤</div></div>",
+   "narration": "رسالة من التلسكوب. الساعة اتناشر بالليل، والتلسكوب بدأ يصفّر لوحده. يوسف ومريم لقوا روبوت صغير اسمه نجم، قال لهم إنه محتاج مساعدين للرحلة الأكبر في حياتهم: رحلة لعيلة الشمس كلها."
+  },
+  {
+   "type": "html",
+   "chapter": "الفصل الأول: نجمنا الكبير",
+   "title": "الشمس",
+   "html": "<div class=\"pg \"><h2>الشمس: نجمنا الكبير</h2><p class=\"hook\">هل تصدّق إن الشمس دي نجم… زي النجوم الصغيرة اللي بنشوفها بالليل؟</p><svg class=\"fig\" viewBox=\"0 0 400 210\" role=\"img\" aria-label=\"الشمس\"><defs>\n<radialGradient id=\"gSun\" cx=\"45%\" cy=\"40%\" r=\"60%\"><stop offset=\"0\" stop-color=\"#fff6c2\"/><stop offset=\".45\" stop-color=\"#ffc93c\"/><stop offset=\"1\" stop-color=\"#ff7b1c\"/></radialGradient>\n<radialGradient id=\"gEarth\" cx=\"35%\" cy=\"35%\" r=\"70%\"><stop offset=\"0\" stop-color=\"#7fd0ff\"/><stop offset=\".6\" stop-color=\"#1f6fd1\"/><stop offset=\"1\" stop-color=\"#0b2f6b\"/></radialGradient>\n<radialGradient id=\"gJup\" cx=\"35%\" cy=\"35%\" r=\"70%\"><stop offset=\"0\" stop-color=\"#f4dcb8\"/><stop offset=\"1\" stop-color=\"#b9824f\"/></radialGradient>\n<radialGradient id=\"gShade\" cx=\"30%\" cy=\"30%\" r=\"75%\"><stop offset=\".55\" stop-color=\"#000\" stop-opacity=\"0\"/><stop offset=\"1\" stop-color=\"#000\" stop-opacity=\".45\"/></radialGradient>\n<filter id=\"glow\" x=\"-50%\" y=\"-50%\" width=\"200%\" height=\"200%\"><feGaussianBlur stdDeviation=\"6\"/></filter>\n</defs>\n<rect width=\"400\" height=\"210\" rx=\"16\" fill=\"#0d0a24\"/>\n<g fill=\"#fff\" opacity=\".7\"><circle cx=\"30\" cy=\"30\" r=\"1.2\"/><circle cx=\"360\" cy=\"40\" r=\"1\"/><circle cx=\"320\" cy=\"180\" r=\"1.4\"/><circle cx=\"60\" cy=\"170\" r=\"1\"/><circle cx=\"110\" cy=\"60\" r=\".8\"/><circle cx=\"290\" cy=\"90\" r=\".9\"/></g>\n<circle cx=\"200\" cy=\"105\" r=\"78\" fill=\"#ffb02e\" opacity=\".55\" filter=\"url(#glow)\"/>\n<circle cx=\"200\" cy=\"105\" r=\"70\" fill=\"url(#gSun)\"/>\n<circle cx=\"175\" cy=\"85\" r=\"9\" fill=\"#ff9a1f\" opacity=\".5\"/><circle cx=\"228\" cy=\"128\" r=\"6\" fill=\"#ff9a1f\" opacity=\".45\"/>\n<circle cx=\"345\" cy=\"105\" r=\"3.2\" fill=\"url(#gEarth)\"/><text x=\"345\" y=\"125\" fill=\"#cfe3ff\" font-size=\"11\" text-anchor=\"middle\" font-family=\"Cairo\">الأرض</text>\n<text x=\"200\" y=\"200\" fill=\"#ffd98a\" font-size=\"11\" text-anchor=\"middle\" font-family=\"Cairo\">الشمس عرضها حوالي ١٠٩ مرة قد الأرض</text>\n</svg><p>الشمس <span class=\"term\" data-def=\"كرة ضخمة جدًا من غازات سخنة بتطلّع ضوء وحرارة من نفسها.\">نجم</span> قريب مننا، عشان كده شايفينها كبيرة. وضوءها بياخد حوالي <b>٨ دقايق</b> عشان يوصل لنا!</p><div class=\"callout tone-warning\"><b>خلّي بالك</b><span>عمرك ما تبص للشمس مباشرة ولا بالتلسكوب: بتأذي العين جدًا.</span></div><div class=\"pgnum\">٥</div></div>",
+   "narration": "الشمس نجمنا الكبير. الشمس نجم قريب مننا، وعرضها حوالي مية وتسعة مرة قد الأرض. ضوءها بياخد حوالي تمن دقايق عشان يوصل لنا. وخلّي بالك: عمرك ما تبص للشمس مباشرة."
+  },
+  {
+   "type": "html",
+   "chapter": "الفصل الأول: نجمنا الكبير",
+   "title": "عيلة الشمس",
+   "html": "<div class=\"pg \"><h2>عيلة الشمس</h2><p class=\"hook\">من شباك السفينة، شافوا الكواكب بتلف حوالين الشمس… كل واحد في طريقه!</p><svg class=\"fig\" viewBox=\"0 0 400 226\" role=\"img\" aria-label=\"مدارات الكواكب حول الشمس\"><defs>\n<radialGradient id=\"gSun\" cx=\"45%\" cy=\"40%\" r=\"60%\"><stop offset=\"0\" stop-color=\"#fff6c2\"/><stop offset=\".45\" stop-color=\"#ffc93c\"/><stop offset=\"1\" stop-color=\"#ff7b1c\"/></radialGradient>\n<radialGradient id=\"gEarth\" cx=\"35%\" cy=\"35%\" r=\"70%\"><stop offset=\"0\" stop-color=\"#7fd0ff\"/><stop offset=\".6\" stop-color=\"#1f6fd1\"/><stop offset=\"1\" stop-color=\"#0b2f6b\"/></radialGradient>\n<radialGradient id=\"gJup\" cx=\"35%\" cy=\"35%\" r=\"70%\"><stop offset=\"0\" stop-color=\"#f4dcb8\"/><stop offset=\"1\" stop-color=\"#b9824f\"/></radialGradient>\n<radialGradient id=\"gShade\" cx=\"30%\" cy=\"30%\" r=\"75%\"><stop offset=\".55\" stop-color=\"#000\" stop-opacity=\"0\"/><stop offset=\"1\" stop-color=\"#000\" stop-opacity=\".45\"/></radialGradient>\n<filter id=\"glow\" x=\"-50%\" y=\"-50%\" width=\"200%\" height=\"200%\"><feGaussianBlur stdDeviation=\"6\"/></filter>\n</defs><rect width=\"400\" height=\"226\" rx=\"16\" fill=\"#0d0a24\"/><circle cx=\"200\" cy=\"113\" r=\"22\" fill=\"#ffb02e\" opacity=\".5\" filter=\"url(#glow)\"/><circle cx=\"200\" cy=\"113\" r=\"18\" fill=\"url(#gSun)\"/><ellipse cx=\"200\" cy=\"113\" rx=\"36\" ry=\"16\" fill=\"none\" stroke=\"#8f86c9\" stroke-opacity=\".35\" stroke-width=\"1\"/><circle cx=\"166.2\" cy=\"107.2\" r=\"3.0\" fill=\"#b5aca0\"/><text x=\"166.2\" y=\"100.2\" fill=\"#e6e1ff\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"Cairo\">عطارد</text><ellipse cx=\"200\" cy=\"113\" rx=\"52\" ry=\"24\" fill=\"none\" stroke=\"#8f86c9\" stroke-opacity=\".35\" stroke-width=\"1\"/><circle cx=\"174.8\" cy=\"91.6\" r=\"5.0\" fill=\"#e8c27a\"/><text x=\"174.8\" y=\"82.6\" fill=\"#e6e1ff\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"Cairo\">الزهرة</text><ellipse cx=\"200\" cy=\"113\" rx=\"70\" ry=\"32\" fill=\"none\" stroke=\"#8f86c9\" stroke-opacity=\".35\" stroke-width=\"1\"/><circle cx=\"214.6\" cy=\"80.8\" r=\"5.4\" fill=\"url(#gEarth)\"/><text x=\"214.6\" y=\"71.4\" fill=\"#e6e1ff\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"Cairo\">الأرض</text><ellipse cx=\"200\" cy=\"113\" rx=\"88\" ry=\"41\" fill=\"none\" stroke=\"#8f86c9\" stroke-opacity=\".35\" stroke-width=\"1\"/><circle cx=\"270.3\" cy=\"88.1\" r=\"4.0\" fill=\"#d2603a\"/><text x=\"270.3\" y=\"80.1\" fill=\"#e6e1ff\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"Cairo\">المريخ</text><ellipse cx=\"200\" cy=\"113\" rx=\"116\" ry=\"54\" fill=\"none\" stroke=\"#8f86c9\" stroke-opacity=\".35\" stroke-width=\"1\"/><circle cx=\"315.7\" cy=\"116.8\" r=\"11.0\" fill=\"url(#gJup)\"/><text x=\"315.7\" y=\"138.8\" fill=\"#e6e1ff\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"Cairo\">المشتري</text><ellipse cx=\"200\" cy=\"113\" rx=\"146\" ry=\"68\" fill=\"none\" stroke=\"#8f86c9\" stroke-opacity=\".35\" stroke-width=\"1\"/><ellipse cx=\"303.2\" cy=\"161.5\" rx=\"17.1\" ry=\"5.2\" fill=\"none\" stroke=\"#d9c08a\" stroke-width=\"2\"/><circle cx=\"303.2\" cy=\"161.5\" r=\"9.5\" fill=\"#e3c98d\"/><text x=\"303.2\" y=\"182.0\" fill=\"#e6e1ff\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"Cairo\">زحل</text><ellipse cx=\"200\" cy=\"113\" rx=\"170\" ry=\"79\" fill=\"none\" stroke=\"#8f86c9\" stroke-opacity=\".35\" stroke-width=\"1\"/><circle cx=\"211.9\" cy=\"192.7\" r=\"7.0\" fill=\"#9fe3e8\"/><text x=\"211.9\" y=\"210.7\" fill=\"#e6e1ff\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"Cairo\">أورانوس</text><ellipse cx=\"200\" cy=\"113\" rx=\"192\" ry=\"90\" fill=\"none\" stroke=\"#8f86c9\" stroke-opacity=\".35\" stroke-width=\"1\"/><circle cx=\"84.5\" cy=\"185.1\" r=\"7.0\" fill=\"#4e7cf0\"/><text x=\"84.5\" y=\"203.1\" fill=\"#e6e1ff\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"Cairo\">نبتون</text></svg><p><span class=\"term\" data-def=\"الشمس وكل اللي بيلف حواليها: ٨ كواكب وأقمارها والكويكبات والمذنّبات.\">المجموعة الشمسية</span> فيها ٨ كواكب، كل كوكب بيلف في طريق اسمه <span class=\"term\" data-def=\"الطريق اللي الكوكب بيمشي فيه وهو بيلف حوالين الشمس.\">المدار</span>. وبلوتو؟ من سنة ٢٠٠٦ بقى اسمه كوكب قزم.</p><div class=\"activity\"><b>احفظها بسهولة</b><p>اعمل جملة تفكّرك بترتيب الكواكب من الأقرب للشمس.</p></div><div class=\"pgnum\">٦</div></div>",
+   "narration": "عيلة الشمس. المجموعة الشمسية فيها تمن كواكب، كل كوكب بيلف في طريق اسمه المدار. الترتيب من الأقرب للشمس: عطارد، الزهرة، الأرض، المريخ، المشتري، زحل، أورانوس، نبتون. وبلوتو بقى كوكب قزم من سنة ألفين وستة."
+  },
+  {
+   "type": "html",
+   "chapter": "الفصل الثاني: الكواكب الصخرية",
+   "title": "جيران قريبين",
+   "html": "<div class=\"pg \"><h2>جيران قريبين: الكواكب الصخرية</h2><p class=\"hook\">أول ٤ كواكب ليهم أرض صلبة… تقدر تقف عليها، بس يا ترى تستحمل الجو؟</p><svg class=\"fig\" viewBox=\"0 0 252 110\" role=\"img\" aria-label=\"أحجام الكواكب الصخرية\"><defs>\n<radialGradient id=\"gSun\" cx=\"45%\" cy=\"40%\" r=\"60%\"><stop offset=\"0\" stop-color=\"#fff6c2\"/><stop offset=\".45\" stop-color=\"#ffc93c\"/><stop offset=\"1\" stop-color=\"#ff7b1c\"/></radialGradient>\n<radialGradient id=\"gEarth\" cx=\"35%\" cy=\"35%\" r=\"70%\"><stop offset=\"0\" stop-color=\"#7fd0ff\"/><stop offset=\".6\" stop-color=\"#1f6fd1\"/><stop offset=\"1\" stop-color=\"#0b2f6b\"/></radialGradient>\n<radialGradient id=\"gJup\" cx=\"35%\" cy=\"35%\" r=\"70%\"><stop offset=\"0\" stop-color=\"#f4dcb8\"/><stop offset=\"1\" stop-color=\"#b9824f\"/></radialGradient>\n<radialGradient id=\"gShade\" cx=\"30%\" cy=\"30%\" r=\"75%\"><stop offset=\".55\" stop-color=\"#000\" stop-opacity=\"0\"/><stop offset=\"1\" stop-color=\"#000\" stop-opacity=\".45\"/></radialGradient>\n<filter id=\"glow\" x=\"-50%\" y=\"-50%\" width=\"200%\" height=\"200%\"><feGaussianBlur stdDeviation=\"6\"/></filter>\n</defs><rect width=\"252\" height=\"110\" rx=\"14\" fill=\"#0d0a24\"/><circle cx=\"226.0\" cy=\"49.0\" r=\"12.0\" fill=\"#b5aca0\"/><circle cx=\"226.0\" cy=\"49.0\" r=\"12.0\" fill=\"url(#gShade)\"/><text x=\"226.0\" y=\"102\" fill=\"#e6e1ff\" font-size=\"11\" text-anchor=\"middle\" font-family=\"Cairo\">عطارد</text><circle cx=\"170.0\" cy=\"49.0\" r=\"30.0\" fill=\"#e8c27a\"/><circle cx=\"170.0\" cy=\"49.0\" r=\"30.0\" fill=\"url(#gShade)\"/><text x=\"170.0\" y=\"102\" fill=\"#e6e1ff\" font-size=\"11\" text-anchor=\"middle\" font-family=\"Cairo\">الزهرة</text><circle cx=\"94.0\" cy=\"49.0\" r=\"32.0\" fill=\"url(#gEarth)\"/><circle cx=\"94.0\" cy=\"49.0\" r=\"32.0\" fill=\"url(#gShade)\"/><text x=\"94.0\" y=\"102\" fill=\"#e6e1ff\" font-size=\"11\" text-anchor=\"middle\" font-family=\"Cairo\">الأرض</text><circle cx=\"31.0\" cy=\"49.0\" r=\"17.0\" fill=\"#d2603a\"/><circle cx=\"31.0\" cy=\"49.0\" r=\"17.0\" fill=\"url(#gShade)\"/><text x=\"31.0\" y=\"102\" fill=\"#e6e1ff\" font-size=\"11\" text-anchor=\"middle\" font-family=\"Cairo\">المريخ</text></svg><ul><li><b>عطارد:</b> أصغر كوكب وأقرب واحد للشمس.</li><li><b>الزهرة:</b> أسخن كوكب! غلافها الجوي <span class=\"term\" data-def=\"غلاف جوي كثيف جدًا بيحبس حرارة الشمس جوّاه زي البطانية.\">التقيل</span> بيحبس الحرارة لحد حوالي ٤٦٥ درجة.</li><li><b>الأرض:</b> بيتنا، الكوكب الوحيد اللي نعرف إن فيه حياة.</li><li><b>المريخ:</b> الكوكب الأحمر، لونه من الصدأ اللي في تربته، وفيه أعلى بركان في المجموعة الشمسية.</li></ul><div class=\"pgnum\">٧</div></div>",
+   "narration": "الكواكب الصخرية. عطارد أصغر كوكب وأقرب واحد للشمس. الزهرة أسخن كوكب لأن غلافها الجوي التقيل بيحبس الحرارة. الأرض بيتنا. والمريخ الكوكب الأحمر، لونه من الصدأ اللي في تربته."
+  },
+  {
+   "type": "html",
+   "chapter": "الفصل الثاني: الكواكب الصخرية",
+   "title": "الأرض بيتنا",
+   "html": "<div class=\"pg \"><h2>الأرض بيتنا</h2><div class=\"emoji-hero\">🌍💧🌱</div><p class=\"lead\">لما بصّوا على الأرض من بعيد، شافوها نقطة زرقا صغيرة. نجم قال: «دي أغلى نقطة في الكون كله… عارفين ليه؟»</p><div class=\"kterm\"><b>سر الحياة على الأرض</b><span>مية سايلة، و<span class=\"term\" data-def=\"طبقة هوا بتحيط بالكوكب، فيها الأكسجين اللي بنتنفسه، وبتحمينا من أشعة الشمس الضارة.\">غلاف جوي</span> فيه أكسجين، ومسافة مناسبة من الشمس (حوالي ١٥٠ مليون كيلومتر): مش سخنة أوي ولا ساقعة أوي.</span></div><p class=\"dlg\"><b>يوسف</b>«يعني لو كانت أقرب شوية كانت هتبقى زي الزهرة؟»</p><p class=\"dlg\"><b>نجم</b>«وأبعد شوية كانت هتتجمّد. الأرض في المكان المظبوط!»</p><p class=\"cliff\">بس استنوا… قدامنا كواكب أكبر من الأرض بمية مرة!</p><div class=\"pgnum\">٨</div></div>",
+   "narration": "الأرض بيتنا. سر الحياة على الأرض: مية سايلة، وغلاف جوي فيه أكسجين، ومسافة مناسبة من الشمس حوالي مية وخمسين مليون كيلومتر، مش سخنة أوي ولا ساقعة أوي."
+  },
+  {
+   "type": "html",
+   "chapter": "الفصل الثالث: العمالقة",
+   "title": "الكواكب العملاقة",
+   "html": "<div class=\"pg \"><h2>الكواكب العملاقة</h2><p class=\"hook\">السفينة اتهزّت… قدامهم عاصفة أكبر من الأرض كلها!</p><ul><li><b>المشتري:</b> أكبر كوكب، ممكن يساع حوالي ١٣٠٠ أرض جوّاه، وفيه <span class=\"term\" data-def=\"عاصفة عملاقة على المشتري مستمرة من مئات السنين، وأكبر من الأرض.\">البقعة الحمرا الكبيرة</span>.</li><li><b>زحل:</b> مشهور بحلقاته المصنوعة من تلج وصخور.</li><li><b>أورانوس:</b> بيلف وهو نايم على جنبه!</li><li><b>نبتون:</b> أبعد كوكب، وفيه أسرع رياح في المجموعة الشمسية.</li></ul><div class=\"kterm\"><b><span class=\"term\" data-def=\"كواكب ضخمة معظمها غازات، ومالهاش أرض صلبة تقف عليها.\">كواكب غازية</span></b><span>العمالقة دول معظمهم غازات، يعني مفيش أرض تنزل عليها السفينة.</span></div><p class=\"dlg\"><b>مريم</b>«يعني ماينفعش ننزل على المشتري؟»</p><p class=\"dlg\"><b>نجم</b>«لأ خالص! هنفضل نتفرّج من فوق.»</p><div class=\"pgnum\">٩</div></div>",
+   "narration": "الكواكب العملاقة. المشتري أكبر كوكب، يساع حوالي ألف وتلتمية أرض، وفيه عاصفة أكبر من الأرض. زحل مشهور بحلقاته. أورانوس بيلف وهو نايم على جنبه. ونبتون فيه أسرع رياح. العمالقة دول معظمهم غازات."
+  },
+  {
+   "type": "html",
+   "chapter": "الفصل الثالث: العمالقة",
+   "title": "تحدّي الأحجام",
+   "html": "<div class=\"pg \"><h2>تحدّي الأحجام</h2><p class=\"hook\">شايف النقطة الزرقا الصغيرة في الآخر؟ دي الأرض!</p><svg class=\"fig\" viewBox=\"0 0 378 160\" role=\"img\" aria-label=\"أحجام الكواكب العملاقة مقارنة بالأرض\"><defs>\n<radialGradient id=\"gSun\" cx=\"45%\" cy=\"40%\" r=\"60%\"><stop offset=\"0\" stop-color=\"#fff6c2\"/><stop offset=\".45\" stop-color=\"#ffc93c\"/><stop offset=\"1\" stop-color=\"#ff7b1c\"/></radialGradient>\n<radialGradient id=\"gEarth\" cx=\"35%\" cy=\"35%\" r=\"70%\"><stop offset=\"0\" stop-color=\"#7fd0ff\"/><stop offset=\".6\" stop-color=\"#1f6fd1\"/><stop offset=\"1\" stop-color=\"#0b2f6b\"/></radialGradient>\n<radialGradient id=\"gJup\" cx=\"35%\" cy=\"35%\" r=\"70%\"><stop offset=\"0\" stop-color=\"#f4dcb8\"/><stop offset=\"1\" stop-color=\"#b9824f\"/></radialGradient>\n<radialGradient id=\"gShade\" cx=\"30%\" cy=\"30%\" r=\"75%\"><stop offset=\".55\" stop-color=\"#000\" stop-opacity=\"0\"/><stop offset=\"1\" stop-color=\"#000\" stop-opacity=\".45\"/></radialGradient>\n<filter id=\"glow\" x=\"-50%\" y=\"-50%\" width=\"200%\" height=\"200%\"><feGaussianBlur stdDeviation=\"6\"/></filter>\n</defs><rect width=\"378\" height=\"160\" rx=\"14\" fill=\"#0d0a24\"/><circle cx=\"308.0\" cy=\"74.0\" r=\"56.0\" fill=\"url(#gJup)\"/><circle cx=\"308.0\" cy=\"74.0\" r=\"56.0\" fill=\"url(#gShade)\"/><ellipse cx=\"324.8\" cy=\"90.8\" rx=\"12.3\" ry=\"6.7\" fill=\"#c0533a\" opacity=\".8\"/><text x=\"308.0\" y=\"152\" fill=\"#e6e1ff\" font-size=\"11\" text-anchor=\"middle\" font-family=\"Cairo\">المشتري</text><ellipse cx=\"191.0\" cy=\"74.0\" rx=\"72.9\" ry=\"19.7\" fill=\"none\" stroke=\"#d9c08a\" stroke-width=\"3\"/><circle cx=\"191.0\" cy=\"74.0\" r=\"47.0\" fill=\"#e3c98d\"/><circle cx=\"191.0\" cy=\"74.0\" r=\"47.0\" fill=\"url(#gShade)\"/><text x=\"191.0\" y=\"152\" fill=\"#e6e1ff\" font-size=\"11\" text-anchor=\"middle\" font-family=\"Cairo\">زحل</text><circle cx=\"110.0\" cy=\"74.0\" r=\"20.0\" fill=\"#9fe3e8\"/><circle cx=\"110.0\" cy=\"74.0\" r=\"20.0\" fill=\"url(#gShade)\"/><text x=\"110.0\" y=\"152\" fill=\"#e6e1ff\" font-size=\"11\" text-anchor=\"middle\" font-family=\"Cairo\">أورانوس</text><circle cx=\"57.0\" cy=\"74.0\" r=\"19.0\" fill=\"#4e7cf0\"/><circle cx=\"57.0\" cy=\"74.0\" r=\"19.0\" fill=\"url(#gShade)\"/><text x=\"57.0\" y=\"152\" fill=\"#e6e1ff\" font-size=\"11\" text-anchor=\"middle\" font-family=\"Cairo\">نبتون</text><circle cx=\"19.0\" cy=\"74.0\" r=\"5.0\" fill=\"url(#gEarth)\"/><circle cx=\"19.0\" cy=\"74.0\" r=\"5.0\" fill=\"url(#gShade)\"/><text x=\"19.0\" y=\"152\" fill=\"#e6e1ff\" font-size=\"11\" text-anchor=\"middle\" font-family=\"Cairo\">الأرض</text></svg><p>الرسمة دي بتقارن أحجام العمالقة بالأرض. المشتري عرضه حوالي ١١ مرة قد عرض الأرض.</p><div class=\"activity\"><b>جرّب في البيت</b><p>هات بطيخة (المشتري) وحبة حمص (الأرض) وحطّهم جنب بعض. حسّيت بالفرق؟ صوّرهم وورّي المدرس!</p></div><div class=\"pgnum\">١٠</div></div>",
+   "narration": "تحدّي الأحجام. المشتري عرضه حوالي حداشر مرة قد عرض الأرض. جرّب في البيت: بطيخة مكان المشتري، وحبة حمص مكان الأرض."
+  },
+  {
+   "type": "html",
+   "chapter": "الفصل الرابع: الأرض والقمر",
+   "title": "القمر وأطواره",
+   "html": "<div class=\"pg \"><h2>القمر وأطواره</h2><p class=\"hook\">في طريق الرجوع، القمر كان بيغيّر شكله… هلال، نص، بدر!</p><div class=\"phases\" aria-label=\"أطوار القمر\">🌑🌒🌓🌔🌕🌖🌗🌘</div><p>القمر هو <span class=\"term\" data-def=\"جسم بيلف حوالين كوكب. القمر تابع الأرض.\">التابع</span> بتاع الأرض. هو مش بينوّر من نفسه، هو بيعكس ضوء الشمس زي المراية.</p><div class=\"kterm\"><b>أطوار القمر</b><span>وإحنا شايفين القمر من الأرض، الجزء المنوّر منه بيكبر ويصغر، والدورة كلها بتاخد حوالي ٢٩ يوم ونص.</span></div><p class=\"dlg\"><b>يوسف</b>«حد نزل على القمر قبل كده؟»</p><p class=\"dlg\"><b>نجم</b>«أيوه! أول ناس نزلوا عليه سنة ١٩٦٩ في رحلة أبولو ١١.»</p><div class=\"pgnum\">١١</div></div>",
+   "narration": "القمر وأطواره. القمر تابع الأرض، ومش بينوّر من نفسه، هو بيعكس ضوء الشمس. الجزء المنوّر اللي بنشوفه بيكبر ويصغر، والدورة بتاخد حوالي تسعة وعشرين يوم ونص. وأول ناس نزلوا على القمر سنة ألف تسعمية تسعة وستين."
+  },
+  {
+   "type": "html",
+   "chapter": "الفصل الرابع: الأرض والقمر",
+   "title": "الليل والنهار والفصول",
+   "html": "<div class=\"pg \"><h2>الليل والنهار والفصول</h2><p class=\"hook\">ليه وإحنا نايمين هنا، فيه أطفال في الناحية التانية من الأرض صاحيين؟</p><svg class=\"fig\" viewBox=\"0 0 400 190\" role=\"img\" aria-label=\"الليل والنهار\"><defs>\n<radialGradient id=\"gSun\" cx=\"45%\" cy=\"40%\" r=\"60%\"><stop offset=\"0\" stop-color=\"#fff6c2\"/><stop offset=\".45\" stop-color=\"#ffc93c\"/><stop offset=\"1\" stop-color=\"#ff7b1c\"/></radialGradient>\n<radialGradient id=\"gEarth\" cx=\"35%\" cy=\"35%\" r=\"70%\"><stop offset=\"0\" stop-color=\"#7fd0ff\"/><stop offset=\".6\" stop-color=\"#1f6fd1\"/><stop offset=\"1\" stop-color=\"#0b2f6b\"/></radialGradient>\n<radialGradient id=\"gJup\" cx=\"35%\" cy=\"35%\" r=\"70%\"><stop offset=\"0\" stop-color=\"#f4dcb8\"/><stop offset=\"1\" stop-color=\"#b9824f\"/></radialGradient>\n<radialGradient id=\"gShade\" cx=\"30%\" cy=\"30%\" r=\"75%\"><stop offset=\".55\" stop-color=\"#000\" stop-opacity=\"0\"/><stop offset=\"1\" stop-color=\"#000\" stop-opacity=\".45\"/></radialGradient>\n<filter id=\"glow\" x=\"-50%\" y=\"-50%\" width=\"200%\" height=\"200%\"><feGaussianBlur stdDeviation=\"6\"/></filter>\n</defs>\n<rect width=\"400\" height=\"190\" rx=\"16\" fill=\"#0d0a24\"/>\n<circle cx=\"-10\" cy=\"95\" r=\"70\" fill=\"#ffb02e\" opacity=\".45\" filter=\"url(#glow)\"/><circle cx=\"-10\" cy=\"95\" r=\"60\" fill=\"url(#gSun)\"/>\n<g stroke=\"#ffd98a\" stroke-width=\"2\" stroke-dasharray=\"4 6\" opacity=\".7\"><line x1=\"60\" y1=\"60\" x2=\"200\" y2=\"60\"/><line x1=\"60\" y1=\"95\" x2=\"200\" y2=\"95\"/><line x1=\"60\" y1=\"130\" x2=\"200\" y2=\"130\"/></g>\n<g transform=\"rotate(-23.5 270 95)\"><circle cx=\"270\" cy=\"95\" r=\"58\" fill=\"url(#gEarth)\"/>\n<path d=\"M270 37 A58 58 0 0 1 270 153 Z\" fill=\"#000\" opacity=\".55\"/>\n<line x1=\"270\" y1=\"25\" x2=\"270\" y2=\"165\" stroke=\"#fff\" stroke-width=\"1.5\" stroke-dasharray=\"3 3\"/></g>\n<text x=\"232\" y=\"100\" fill=\"#fff\" font-size=\"13\" font-family=\"Cairo\" text-anchor=\"middle\">نهار</text>\n<text x=\"305\" y=\"100\" fill=\"#cfd6ff\" font-size=\"13\" font-family=\"Cairo\" text-anchor=\"middle\">ليل</text>\n<path d=\"M330 28 q28 10 26 34\" fill=\"none\" stroke=\"#9de0ff\" stroke-width=\"2.2\" marker-end=\"url(#ar)\"/>\n<defs><marker id=\"ar\" markerWidth=\"8\" markerHeight=\"8\" refX=\"4\" refY=\"4\" orient=\"auto\"><path d=\"M0 0 L8 4 L0 8 Z\" fill=\"#9de0ff\"/></marker></defs>\n<text x=\"368\" y=\"180\" fill=\"#9de0ff\" font-size=\"10\" font-family=\"Cairo\" text-anchor=\"end\">الأرض بتلف حوالين نفسها كل ٢٤ ساعة</text>\n</svg><ul><li><b><span class=\"term\" data-def=\"لفّة الأرض حوالين نفسها، وبتعمل الليل والنهار.\">الدوران</span>:</b> الأرض بتلف حوالين نفسها كل حوالي ٢٤ ساعة، فالناحية اللي قدام الشمس نهار والتانية ليل.</li><li><b><span class=\"term\" data-def=\"رحلة الأرض حوالين الشمس، وبتاخد سنة.\">الدوران حول الشمس</span>:</b> بتاخد حوالي ٣٦٥ يوم وربع، يعني سنة.</li><li><b>الفصول:</b> سببها إن محور الأرض مايل حوالي ٢٣٫٥ درجة.</li></ul><div class=\"pgnum\">١٢</div></div>",
+   "narration": "الليل والنهار والفصول. الأرض بتلف حوالين نفسها كل حوالي أربعة وعشرين ساعة، فالناحية اللي قدام الشمس نهار والتانية ليل. وبتلف حوالين الشمس في حوالي تلتمية خمسة وستين يوم وربع. والفصول سببها إن محور الأرض مايل."
+  },
+  {
+   "type": "html",
+   "chapter": "الفصل الخامس: لسه الرحلة مكمّلة",
+   "title": "عيون على الفضاء",
+   "html": "<div class=\"pg \"><h2>عيون على الفضاء</h2><div class=\"emoji-hero\">🛰️🚀</div><p class=\"lead\">قبل ما ينزّلهم على السطح، فرّجهم نجم على «عيون» البشر في الفضاء.</p><ul><li><b>تلسكوب جيمس ويب:</b> اتطلق آخر سنة ٢٠٢١، وبيصوّر نجوم ومجرات بعيدة جدًا.</li><li><b>المركبة برسيفيرانس:</b> <span class=\"term\" data-def=\"عربية روبوت بتمشي على سطح كوكب تانية وبتجمع صور وعينات.\">مركبة جوّالة</span> بتستكشف المريخ من سنة ٢٠٢١ وبتدوّر على آثار حياة قديمة.</li><li><b>الأقمار الصناعية:</b> بتساعدنا في الخرايط والتليفونات ومعرفة الطقس.</li></ul><p class=\"dlg\"><b>مريم</b>«تفتكر هييجي يوم نروح المريخ؟»</p><p class=\"dlg\"><b>نجم</b>«يمكن… وممكن تكوني إنتِ أول رائدة فضاء تروح!»</p><p class=\"cliff\">بس الأول… لازم تعدّي اختبار رواد الفضاء!</p><div class=\"pgnum\">١٣</div></div>",
+   "narration": "عيون على الفضاء. تلسكوب جيمس ويب اتطلق آخر سنة ألفين واحد وعشرين وبيصوّر مجرات بعيدة جدًا. والمركبة برسيفيرانس بتستكشف المريخ من سنة ألفين واحد وعشرين. والأقمار الصناعية بتساعدنا في الخرايط والطقس."
+  },
+  {
+   "type": "html",
+   "chapter": "الفصل الخامس: لسه الرحلة مكمّلة",
+   "title": "اختبار رائد الفضاء",
+   "html": "<div class=\"pg fill\"><h2>اختبار رائد الفضاء</h2><div class=\"emoji-hero\">🏅👩‍🚀</div><p style=\"text-align:center\">نجم جهّز لك ٨ أسئلة. جاوب صح وخد شارة رائد الفضاء!</p><button class=\"qbtn\" data-quiz=\"1\">ابدأ الاختبار</button><p class=\"tag\" style=\"text-align:center\">٨ أسئلة · أحسن نتيجة هتظهر فوق</p><div class=\"pgnum\">١٤</div></div>"
+  },
+  {
+   "type": "html",
+   "title": "عن المؤلف",
+   "html": "<div class=\"pg fill\" style=\"text-align:center\"><h2>عن المؤلف</h2><div class=\"emoji-hero\">👨‍🏫</div><h3>أحمد الهنداوي</h3><p class=\"tag\">AI4EduTech</p><p>بيحب يحوّل الدرس لرحلة، ويعمل أدوات ذكية تساعد المدرسين يقدّموا العلوم بطريقة الأطفال يحبّوها.</p><div class=\"pgnum\">١٥</div></div>"
+  },
+  {
+   "type": "back",
+   "title": "الغلاف الخلفي"
+  }
+ ],
+ "quiz": [
+  {
+   "q": "الشمس تبقى إيه؟",
+   "options": [
+    "نجم",
+    "كوكب",
+    "قمر",
+    "مذنّب"
+   ],
+   "a": "نجم",
+   "explanation": "الشمس نجم قريب مننا، كرة غازات سخنة بتطلّع ضوء وحرارة."
+  },
+  {
+   "q": "كام كوكب في المجموعة الشمسية؟",
+   "options": [
+    "٨",
+    "٩",
+    "٧",
+    "١٠"
+   ],
+   "a": "٨",
+   "explanation": "٨ كواكب، وبلوتو بقى كوكب قزم من سنة ٢٠٠٦."
+  },
+  {
+   "q": "أسخن كوكب في المجموعة الشمسية هو…",
+   "options": [
+    "الزهرة",
+    "عطارد",
+    "المريخ",
+    "المشتري"
+   ],
+   "a": "الزهرة",
+   "explanation": "غلاف الزهرة الجوي التقيل بيحبس الحرارة، فبقت أسخن من عطارد مع إنها أبعد."
+  },
+  {
+   "q": "ليه المريخ لونه أحمر؟",
+   "options": [
+    "عشان الصدأ اللي في تربته",
+    "عشان قريب من الشمس",
+    "عشان مليان نار",
+    "عشان حلقاته حمرا"
+   ],
+   "a": "عشان الصدأ اللي في تربته",
+   "explanation": "تربة المريخ فيها حديد صدّى، وده اللي مدّيه اللون الأحمر."
+  },
+  {
+   "q": "أكبر كوكب في المجموعة الشمسية هو…",
+   "options": [
+    "المشتري",
+    "زحل",
+    "الأرض",
+    "نبتون"
+   ],
+   "a": "المشتري",
+   "explanation": "المشتري يساع حوالي ١٣٠٠ أرض جوّاه."
+  },
+  {
+   "q": "القمر بينوّر بالليل إزاي؟",
+   "options": [
+    "بيعكس ضوء الشمس",
+    "بيطلّع ضوء من نفسه",
+    "فيه نار جوّاه",
+    "بياخد ضوء من النجوم"
+   ],
+   "a": "بيعكس ضوء الشمس",
+   "explanation": "القمر مش بينوّر من نفسه، هو بيعكس ضوء الشمس زي المراية."
+  },
+  {
+   "q": "إيه اللي بيعمل الليل والنهار؟",
+   "options": [
+    "دوران الأرض حوالين نفسها",
+    "دوران القمر حوالين الأرض",
+    "حركة الشمس حوالين الأرض",
+    "السحاب"
+   ],
+   "a": "دوران الأرض حوالين نفسها",
+   "explanation": "الأرض بتلف حوالين نفسها كل حوالي ٢٤ ساعة، فالناحية اللي قدام الشمس بيبقى فيها نهار."
+  },
+  {
+   "q": "إيه اللي بيخلّي الحياة ممكنة على الأرض؟",
+   "options": [
+    "مية سايلة وهوا ومسافة مناسبة من الشمس",
+    "إنها أكبر كوكب",
+    "إن ليها حلقات",
+    "إنها أقرب كوكب للشمس"
+   ],
+   "a": "مية سايلة وهوا ومسافة مناسبة من الشمس",
+   "explanation": "المية والغلاف الجوي والمسافة المظبوطة من الشمس هم سر الحياة على الأرض."
+  }
+ ],
+ "css": ".pg svg.fig{width:100%;height:auto;display:block;margin:.2em 0 .8em;border-radius:14px;box-shadow:0 8px 22px rgba(10,6,40,.35)}.pg .phases{direction:ltr;text-align:center;font-size:1.75em;letter-spacing:.08em;margin:.2em 0 .6em;filter:drop-shadow(0 4px 8px rgba(0,0,0,.25))}"
+}
