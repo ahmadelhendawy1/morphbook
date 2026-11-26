@@ -28,6 +28,8 @@ One file describes a book. `tools/build_book.py` turns it into one HTML file.
 | `aspect` | page width ÷ height (0.72 default; a PDF's own ratio from `pdf_to_book.py`) |
 | `sound` | `{ "enabled": true, "volume": 0.7, "url": "optional-own-clip.mp3" }` |
 | `hardCover` | `false` to make covers soft paper |
+| `arabic` | `fusha` for Modern Standard (educational) Arabic reader labels; default is Egyptian colloquial |
+| `labels` | override any reader label, e.g. `{"hint": "…"}` |
 | `voiceLang`, `voiceRate` | read-aloud voice, e.g. `ar-EG`, `0.95` |
 | `duration` | milliseconds for an automatic turn (900) |
 | `single` | `true` to always show one page |

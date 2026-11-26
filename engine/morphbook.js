@@ -28,7 +28,13 @@
       sound: 'صوت الصفحات', read: 'قراءة بصوت عالٍ', dark: 'الوضع الليلي', full: 'ملء الشاشة', print: 'طباعة',
       quiz: 'الاختبار', score: 'النتيجة', again: 'حاول تاني', close: 'إغلاق', great: 'برافو عليك!', keep: 'كمّل استكشاف!',
       q: 'سؤال', hint: 'اسحب طرف الصفحة أو اضغط على حافتها عشان تقلب', back: 'الغلاف الخلفي', start: 'ابدأ الاختبار',
-      jump: 'روح لصفحة' }
+      jump: 'روح لصفحة' },
+    // Modern Standard (educational) Arabic: chosen with meta.arabic = "fusha"
+    'ar-fusha': { contents: 'المحتويات', cover: 'الغلاف', page: 'صفحة', of: 'من', prev: 'الصفحة السابقة', next: 'الصفحة التالية',
+      sound: 'صوت الصفحات', read: 'قراءة بصوت عالٍ', dark: 'الوضع الليلي', full: 'ملء الشاشة', print: 'طباعة',
+      quiz: 'الاختبار', score: 'النتيجة', again: 'أعِد المحاولة', close: 'إغلاق', great: 'أحسنت!', keep: 'واصل التعلّم!',
+      q: 'سؤال', hint: 'اسحب طرف الصفحة أو انقر على حافتها لتقليبها', back: 'الغلاف الخلفي', start: 'ابدأ الاختبار',
+      jump: 'انتقل إلى صفحة' }
   };
 
   var ICON = {
@@ -191,7 +197,8 @@
     this.quiz = this.data.quiz || [];
     this.rtl = (this.meta.dir || (this.meta.lang === 'ar' ? 'rtl' : 'ltr')) === 'rtl';
     var lang = this.meta.lang || (this.rtl ? 'ar' : 'en');
-    this.L = Object.assign({}, L10N[lang] || L10N.en, this.opts.labels || {});
+    var labelSet = (lang === 'ar' && this.meta.arabic === 'fusha') ? 'ar-fusha' : lang;
+    this.L = Object.assign({}, L10N[labelSet] || L10N[lang] || L10N.en, this.meta.labels || {}, this.opts.labels || {});
     this.N = this.pages.length;
     this.spread = false;
     this.pos = 0;              // spread index (two-page) or page index (one-page)
