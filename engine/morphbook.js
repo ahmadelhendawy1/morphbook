@@ -750,7 +750,8 @@
       if (ev.pointerType !== 'mouse' || self.state === 'anim') return;
       // peek: a hovering mouse near a corner lifts it a little
       var z = self.zone(p);
-      if (z && !self.turn && self.state === 'idle') {
+      // no peek over a playing video or a practice/lab/picture page: the peek redraws the page and would restart the video
+      if (z && !self.turn && self.state === 'idle' && !(self.ext && self.ext.blockPeek && self.ext.blockPeek())) {
         var a = z.dir > 0 ? self.pos : self.pos - 1, t = self.startTurn(a, z.corner);
         if (!t) return;
         t.dir = z.dir; self.state = 'peek';

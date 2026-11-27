@@ -28,7 +28,7 @@ aside{background:var(--s-panel);border-inline-end:1px solid var(--s-line);overfl
 fieldset{border:0;padding:0;margin:1rem 0 0}
 legend{font-size:.72rem;font-weight:800;letter-spacing:.06em;color:var(--s-acc);margin-bottom:.4rem}
 label.f{display:block;font-size:.78rem;color:var(--s-soft);margin:.45rem 0 .2rem}
-input[type=text],select{width:100%;font:inherit;font-size:.88rem;color:var(--s-ink);background:#0f1522;border:1px solid var(--s-line);border-radius:10px;padding:.5rem .65rem}
+input[type=text],input[type=number],select{width:100%;font:inherit;font-size:.88rem;color:var(--s-ink);background:#0f1522;border:1px solid var(--s-line);border-radius:10px;padding:.5rem .65rem}
 input[type=text]:focus,select:focus{outline:2px solid var(--s-acc);outline-offset:0}
 .row{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
 .chk{display:flex;align-items:center;gap:.5rem;font-size:.85rem;margin:.45rem 0}
@@ -72,7 +72,18 @@ textarea.code{font-family:ui-monospace,Consolas,monospace;font-size:.72rem;direc
 .report ul{margin:.3rem 0 0;padding-inline-start:1.1rem}
 .report .btn{margin-top:.5rem;padding:.55rem;font-size:.82rem}
 [hidden]{display:none!important}
+.pic{display:flex;align-items:center;gap:.4rem;padding:.45rem 0;border-top:1px solid var(--s-line);font-size:.78rem}
+.pic span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pic button{font:inherit;font-size:.74rem;font-weight:700;color:var(--s-ink);background:#0f1522;border:1px solid var(--s-line);border-radius:9px;padding:.3rem .55rem;cursor:pointer}
+.pic button.done{border-color:var(--s-ok);color:var(--s-ok)}
+.sharelink{display:flex;gap:.35rem;margin-top:.45rem}.sharelink input{flex:1;direction:ltr;font-size:.75rem}
+body.reader #app{grid-template-columns:1fr}body.reader aside{display:none}
+.readbar{position:fixed;inset-inline-end:12px;top:64px;z-index:90;display:none;gap:.35rem}
+body.reader .readbar{display:flex}
+.readbar a,.readbar button{font:inherit;font-size:.74rem;font-weight:800;text-decoration:none;color:#fff;background:linear-gradient(135deg,var(--s-acc),var(--s-acc2));border:0;border-radius:10px;padding:.35rem .7rem;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.3)}
 @media (max-width:820px){html,body{height:auto}body{overflow:auto}#app{flex:none;display:block}aside{border:0;overflow:visible}main{height:88vh;height:88svh}}
+html:has(body.reader){height:100%}
+@media (max-width:820px){html:has(body.reader),body.reader{height:100%}body.reader{overflow:hidden}body.reader #app{flex:1;display:grid}body.reader main{height:auto}}
 </style>
 </head>
 <body>
@@ -90,18 +101,22 @@ textarea.code{font-family:ui-monospace,Consolas,monospace;font-size:.72rem;direc
     <div class="step"><h3><i>1</i><span data-t="s1"></span></h3>
       <label class="f" data-t="topic"></label><input type="text" id="ivTopic">
       <label class="f" data-t="ivSubject"></label><div class="chips" id="ivSubject"></div>
-      <label class="f" data-t="ivStage"></label><div class="chips" id="ivStage"></div>
+      <label class="f" data-t="ivStage"></label><select id="ivGrade"></select>
       <label class="f" data-t="ivObj"></label><textarea id="ivObj" rows="3"></textarea>
     </div>
     <div class="step"><h3><i>2</i><span data-t="s2"></span></h3>
       <label class="f" data-t="ivLang"></label><div class="chips" id="ivLang"></div>
       <label class="f" data-t="ivLen"></label><div class="chips" id="ivLen"></div>
+      <div class="row" style="margin-top:.4rem;align-items:center"><span class="hint" style="margin:0" data-t="ivLenOwn"></span><input type="number" id="ivLenCustom" min="8" max="40" step="2" inputmode="numeric"></div>
       <label class="f" data-t="ivStyle"></label><div class="chips" id="ivStyle"></div>
       <label class="f" data-t="ivChars"></label><input type="text" id="ivChars">
     </div>
     <div class="step"><h3><i>3</i><span data-t="s3"></span></h3>
       <div class="chips" id="ivMods"></div>
       <div id="ivQuizBox"><label class="f" data-t="ivQuiz"></label><div class="chips" id="ivQuiz"></div></div>
+      <label class="f" data-t="ivPics"></label><div class="chips" id="ivPics"></div>
+      <div id="ivStyleBox"><label class="f" data-t="ivPicStyle"></label><div class="chips" id="ivPicStyle"></div></div>
+      <div class="chips" id="ivSvg" style="margin-top:.5rem"></div>
       <div id="ivYtBox"><label class="f" data-t="yt"></label><input type="text" id="ivYt" dir="ltr" placeholder="https://www.youtube.com/watch?v=…"></div>
       <label class="f" data-t="ivNotes"></label><input type="text" id="ivNotes">
     </div>
@@ -129,6 +144,8 @@ textarea.code{font-family:ui-monospace,Consolas,monospace;font-size:.72rem;direc
   </section>
   <div class="bar"><i id="bar"></i></div>
   <div class="status" id="status"></div>
+  <div class="step" id="picsPanel" hidden><h3>🎨 <span data-t="picsTitle"></span></h3><p class="hint" data-t="picsHint"></p>
+    <button class="btn ghost" id="picsCopyAll" type="button" data-t="picsCopyAll"></button><div id="picsList"></div></div>
 
   <fieldset><legend data-t="book"></legend>
     <label class="f" data-t="title"></label><input type="text" id="title">
@@ -152,9 +169,12 @@ textarea.code{font-family:ui-monospace,Consolas,monospace;font-size:.72rem;direc
 
   <button class="btn" id="export" disabled data-t="export"></button>
   <button class="btn ghost" id="exportJson" disabled data-t="exportJson"></button>
+  <button class="btn ghost" id="share" disabled hidden data-t="share"></button>
+  <div class="report" id="shareBox"></div>
   <p class="note" data-t="note"></p>
 </aside>
 <main>
+  <div class="readbar"><button type="button" id="readDl">⬇</button><a href="./" id="readMake">✏️</a></div>
   <div id="preview"></div>
   <div class="empty" id="empty"><div><div class="art">📚</div><p data-t="empty"></p></div></div>
 </main>
@@ -170,7 +190,7 @@ textarea.code{font-family:ui-monospace,Consolas,monospace;font-size:.72rem;direc
   'use strict';
   var T = {
     ar: { tag: 'من PDF لكتاب بيتقلّب بجد', drop1: 'اسحب ملف PDF هنا أو دوس واختار', drop2: 'أو صور الصفحات بالترتيب، أو book.json',
-      book: 'بيانات الكتاب', title: 'عنوان الكتاب', author: 'اسم المؤلف', org: 'المدرسة / الجهة', grade: 'الصف', subject: 'المادة', yt: 'لينك فيديو يوتيوب (اختياري) — هيتضاف صفحة فيديو قبل الغلاف الأخير', ytPage: 'فيديو الدرس', ytBad: 'اللينك ده مش لينك يوتيوب',
+      book: 'بيانات الكتاب', title: 'عنوان الكتاب', author: 'اسم المؤلف', org: 'المدرسة / الجهة', grade: 'الصف', subject: 'المادة', yt: 'لينك فيديو يوتيوب (اختياري) — هيتضاف صفحة فيديو في أول الدرس', ytPage: 'فيديو الدرس', ytBad: 'اللينك ده مش لينك يوتيوب',
       look: 'الشكل والصوت', dir: 'اتجاه القراءة', auto: 'تلقائي', rtl: 'من اليمين (عربي)', ltr: 'من الشمال (إنجليزي)',
       quality: 'جودة الصفحات', q1: 'خفيفة', q2: 'عادية', q3: 'عالية', hard: 'غلاف مقوّى للأول والآخر', sound: 'صوت تقليب الورق',
       split: 'قسّم الصفحات المزدوجة (سكان)', export: '⬇️ نزّل الكتاب كملف HTML واحد', exportJson: 'نزّل book.json للتعديل',
@@ -178,7 +198,7 @@ textarea.code{font-family:ui-monospace,Consolas,monospace;font-size:.72rem;direc
       ready: 'جاهز! قلّب الكتاب على اليمين 👉', bad: 'الملف ده مش PDF ولا صور', exported: 'اتنزّل ✔',
       note: 'كل حاجة بتحصل جوه المتصفح بتاعك، الملف مش بيترفع على أي سيرفر. الكتاب اللي بينزل بيشتغل من غير نت، على الموبايل والكمبيوتر، وتقدر ترفعه على أي موقع أو منصة.' },
     en: { tag: 'From PDF to a book that really turns', drop1: 'Drop a PDF here or click to choose', drop2: 'or page images in order, or a book.json',
-      book: 'Book details', title: 'Title', author: 'Author', org: 'School / organisation', grade: 'Grade', subject: 'Subject', yt: 'YouTube video link (optional) — adds a video page before the back cover', ytPage: 'Lesson video', ytBad: 'That is not a YouTube link',
+      book: 'Book details', title: 'Title', author: 'Author', org: 'School / organisation', grade: 'Grade', subject: 'Subject', yt: 'YouTube video link (optional) — adds a video page at the start of the lesson', ytPage: 'Lesson video', ytBad: 'That is not a YouTube link',
       look: 'Look and sound', dir: 'Reading direction', auto: 'Automatic', rtl: 'Right to left (Arabic)', ltr: 'Left to right',
       quality: 'Page quality', q1: 'Light', q2: 'Standard', q3: 'High', hard: 'Hard covers on first and last page', sound: 'Paper turning sound',
       split: 'Split scanned two-page spreads', export: '⬇️ Download the book as one HTML file', exportJson: 'Download book.json to edit',
@@ -360,7 +380,7 @@ textarea.code{font-family:ui-monospace,Consolas,monospace;font-size:.72rem;direc
       return o;
     });
     var yt = ytId($('yt').value);
-    if (yt && !list.some(function (p) { return p.type === 'video' && ytId(p.youtube || p.url) === yt; })) { list = list.slice(); list.splice(Math.max(1, list.length - 1), 0, { type: 'video', title: T[ui].ytPage, youtube: yt }); }
+    if (yt && !list.some(function (p) { return p.type === 'video' && ytId(p.youtube || p.url) === yt; })) { list = list.slice(); var at = list[1] && /tocrow/.test(list[1].html || '') ? 2 : 1; list.splice(Math.min(at, list.length - 1), 0, { type: 'video', title: T[ui].ytPage, youtube: yt }); }   // the video opens the lesson
     return { meta: meta, pages: list, quiz: imported ? imported.quiz || [] : [] };
   }
 
@@ -387,7 +407,8 @@ textarea.code{font-family:ui-monospace,Consolas,monospace;font-size:.72rem;direc
     var effects = themePack === 'studio' ? window.MorphBookTheme : undefined;
     var preview = preparedBook(book);
     live = MorphBook.mount(root, JSON.parse(JSON.stringify(preview)), Object.assign({}, effects, { restore: false, studio: true }));
-    $('export').disabled = false; $('exportJson').disabled = false;
+    $('export').disabled = false; $('exportJson').disabled = false; $('share').disabled = false;
+    if (typeof renderPics === 'function') renderPics();
   }
   ['title', 'author', 'org', 'grade', 'subject', 'yt'].forEach(function (k) { var t; $(k).addEventListener('input', function () { clearTimeout(t); t = setTimeout(refresh, 500); }); });
   ['dir', 'hard', 'sound'].forEach(function (k) { $(k).addEventListener('change', refresh); });
@@ -401,7 +422,7 @@ textarea.code{font-family:ui-monospace,Consolas,monospace;font-size:.72rem;direc
   }
   function slug() { return (book.meta.title || 'book').trim().replace(/[\\/:*?"<>|]+/g, '').replace(/\s+/g, '-') || 'book'; }
   function withPictures(b) {          // pictures uploaded into picture pages in the preview travel with the book
-    var imgs = live && live.ext && live.ext.images;
+    var imgs = live && live.ext && live.ext.allImages && live.ext.allImages();
     if (!imgs || !Object.keys(imgs).length) return b;
     var c = Object.assign({}, b); c.meta = Object.assign({}, b.meta, { images: Object.assign({}, b.meta.images || {}, imgs) }); return c;
   }

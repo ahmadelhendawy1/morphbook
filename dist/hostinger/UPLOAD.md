@@ -1,15 +1,18 @@
 # Upload MorphBook Studio to ai4edutech.com
 
-One file, no PHP, no database, no API keys.
+Two files. No database and no API keys.
 
-| From this folder | To Hostinger |
-|---|---|
-| `public_html/apps/morphbook/index.html` | `public_html/apps/morphbook/index.html` |
+| From this folder | To Hostinger | What it is |
+|---|---|---|
+| `public_html/apps/morphbook/index.html` | `public_html/apps/morphbook/index.html` | the Studio, and the reader for shared links |
+| `public_html/api/morphbook_api.php` | `public_html/api/morphbook_api.php` | publishing: saves a book and gives its link |
 
 1. hPanel → **Files → File Manager**.
-2. Open `public_html/apps`. Create the folder `morphbook` if it is not there.
-3. Upload `index.html` into it (replace the old one when updating).
+2. Open `public_html/apps`, create the folder `morphbook`, upload `index.html` into it.
+3. Open `public_html/api`, upload `morphbook_api.php` into it.
 4. Open https://ai4edutech.com/apps/morphbook/
+
+Published books are saved as small JSON files in a folder **above** `public_html` (`morphbook_books`), created automatically the first time a teacher publishes. Nobody can open that folder from the web; books are read only through the API, and the Studio cleans every book again before showing it. Limits: 8 MB per book, 30 publishes per hour per visitor. A shared link looks like `https://ai4edutech.com/apps/morphbook/?b=k3j9x0p2qa`.
 
 The page loads the site navbar from `/assets/ai4-shell.css` and `/assets/ai4-shell.js`.
 
@@ -22,7 +25,7 @@ The page loads the site navbar from `/assets/ai4-shell.css` and `/assets/ai4-she
 
 The **📄 From a PDF** tab turns a PDF or page images into a flipbook without any AI.
 
-Nothing is uploaded to the server: the PDF, the AI reply and the book stay in the teacher's browser.
+Nothing goes to the server until the teacher presses **🔗 Publish and get a link**: then only the finished book (its pages and pictures) is saved. Publishing again from the same browser updates the same link.
 
 ## Rebuild after changing the engine or the Studio
 

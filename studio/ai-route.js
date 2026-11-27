@@ -1,7 +1,11 @@
   // ================= AI route: interview → prompt → paste → book =================
   Object.assign(T.ar, {
     tag: 'كتاب تفاعلي بيتقلّب بجد — بالذكاء الاصطناعي أو من PDF', tabAi: '✨ كتاب بالذكاء الاصطناعي', tabPdf: '📄 من ملف PDF',
-    s1: 'الدرس', topic: 'موضوع الدرس', ivSubject: 'المادة', ivStage: 'المرحلة', ivObj: 'أهداف الدرس (هدف في كل سطر — اختياري)',
+    s1: 'الدرس', topic: 'موضوع الدرس', ivSubject: 'المادة', ivStage: 'الصف الدراسي', ivLenOwn: 'أو اكتب عدد الصفحات (٨–٤٠):',
+    ivPics: 'الصور', ivPicStyle: 'شكل الصور', picsTitle: 'صور الكتاب', picsHint: 'انسخ وصف كل صورة وحطّه في ChatGPT أو Gemini، وبعدين ارفع الصورة هنا. الصور بتتحفظ جوه الكتاب لما تنزّله.',
+    picsCopyAll: '📋 انسخ أوصاف كل الصور مرة واحدة', picPrompt: '🎨 الوصف', picUp: '⬆ صورة', picDone: '✔ اتضافت', pagePfx: 'صفحة',
+    share: '🔗 انشر الكتاب وخد لينك', sharing: 'بننشر الكتاب…', shared: '✅ الكتاب اتنشر! ابعت اللينك لطلابك:', shareCopy: 'انسخ', shareWa: 'واتساب', shareOpen: 'افتح',
+    shareErr: 'النشر ماتمّش: ', shareAgain: 'التعديلات اتنشرت على نفس اللينك ✔', readDl: '⬇ نزّل الكتاب', readMake: '✏️ اعمل كتابك', readLoading: 'بنفتح الكتاب…', readMissing: 'الكتاب ده مش موجود أو اتشال.', ivObj: 'أهداف الدرس (هدف في كل سطر — اختياري)',
     s2: 'الكتاب', ivLang: 'لغة الكتاب', ivLen: 'عدد الصفحات', ivStyle: 'طريقة الحكي', ivChars: 'أسماء الشخصيات (اختياري)',
     s3: 'التفاعل', ivQuiz: 'عدد أسئلة الاختبار', ivNotes: 'ملاحظات للذكاء الاصطناعي (اختياري)',
     s4: 'انسخ الطلب', s4h: 'هنكتب لك طلب جاهز فيه كل اختياراتك. انسخه وحطّه في ChatGPT أو Gemini أو Claude.',
@@ -13,7 +17,11 @@
   });
   Object.assign(T.en, {
     tag: 'Interactive books that really turn — with AI or from a PDF', tabAi: '✨ Book with AI', tabPdf: '📄 From a PDF',
-    s1: 'The lesson', topic: 'Lesson topic', ivSubject: 'Subject', ivStage: 'Stage', ivObj: 'Learning objectives (one per line — optional)',
+    s1: 'The lesson', topic: 'Lesson topic', ivSubject: 'Subject', ivStage: 'Grade', ivLenOwn: 'or type the number of pages (8–40):',
+    ivPics: 'Pictures', ivPicStyle: 'Picture style', picsTitle: 'Book pictures', picsHint: 'Copy each picture description into ChatGPT or Gemini, then upload the picture here. Pictures are saved inside the downloaded book.',
+    picsCopyAll: '📋 Copy all picture descriptions at once', picPrompt: '🎨 Description', picUp: '⬆ Picture', picDone: '✔ Added', pagePfx: 'Page',
+    share: '🔗 Publish and get a link', sharing: 'Publishing…', shared: '✅ Published! Send this link to your students:', shareCopy: 'Copy', shareWa: 'WhatsApp', shareOpen: 'Open',
+    shareErr: 'Publishing failed: ', shareAgain: 'Changes published to the same link ✔', readDl: '⬇ Download the book', readMake: '✏️ Make your own book', readLoading: 'Opening the book…', readMissing: 'This book does not exist or was removed.', ivObj: 'Learning objectives (one per line — optional)',
     s2: 'The book', ivLang: 'Book language', ivLen: 'Pages', ivStyle: 'Storytelling', ivChars: 'Character names (optional)',
     s3: 'Interaction', ivQuiz: 'Quiz questions', ivNotes: 'Notes for the AI (optional)',
     s4: 'Copy the prompt', s4h: 'We write a ready prompt with all your choices. Copy it into ChatGPT, Gemini or Claude.',
@@ -27,7 +35,13 @@
   var SUBJECTS = [['science', 'علوم', 'Science'], ['maths', 'رياضيات', 'Maths'], ['arabic', 'لغة عربية', 'Arabic'], ['english', 'لغة إنجليزية', 'English'],
     ['social', 'دراسات اجتماعية', 'Social studies'], ['religion', 'تربية دينية', 'Religion'], ['other', 'أخرى', 'Other']];
   var LANGUAGE_SUBJECTS = ['arabic', 'english', 'social', 'religion'];
-  var STAGES = [['kg', 'رياض أطفال', 'KG'], ['p13', 'ابتدائي 1–3', 'Primary 1–3'], ['p46', 'ابتدائي 4–6', 'Primary 4–6'], ['prep', 'إعدادي', 'Prep (7–9)'], ['sec', 'ثانوي', 'Secondary']];
+  var GRADES = [['kg1', 'رياض الأطفال (KG1)', 'KG1', 'kg'], ['kg2', 'رياض الأطفال (KG2)', 'KG2', 'kg'],
+    ['g1', 'الصف الأول الابتدائي', 'Grade 1', 'p13'], ['g2', 'الصف الثاني الابتدائي', 'Grade 2', 'p13'], ['g3', 'الصف الثالث الابتدائي', 'Grade 3', 'p13'],
+    ['g4', 'الصف الرابع الابتدائي', 'Grade 4', 'p46'], ['g5', 'الصف الخامس الابتدائي', 'Grade 5', 'p46'], ['g6', 'الصف السادس الابتدائي', 'Grade 6', 'p46'],
+    ['g7', 'الصف الأول الإعدادي', 'Grade 7', 'prep'], ['g8', 'الصف الثاني الإعدادي', 'Grade 8', 'prep'], ['g9', 'الصف الثالث الإعدادي', 'Grade 9', 'prep'],
+    ['g10', 'الصف الأول الثانوي', 'Grade 10', 'sec'], ['g11', 'الصف الثاني الثانوي', 'Grade 11', 'sec'], ['g12', 'الصف الثالث الثانوي', 'Grade 12', 'sec']];
+  function gradeRow() { return GRADES.filter(function (g) { return g[0] === IV.grade; })[0] || GRADES[5]; }
+  function stage() { return gradeRow()[3]; }
   var LEVEL = {
     kg: { words: '35–60', rule: 'Ages 4–6. Sentences of at most 8 words, one idea per page, the new word explained right where it appears, lots of emoji pictures, almost no boxes.' },
     p13: { words: '60–90', rule: 'Ages 6–9. Sentences of at most 12 words, one idea per block, every new word explained where it appears, one control or question per interactive page.' },
@@ -40,16 +54,24 @@
   var STYLES = [['journey', 'رحلة اكتشاف مع شخصيات', 'Discovery journey with characters', true], ['mystery', 'لغز نحلّه', 'A mystery to solve'],
     ['narrator', 'راوي يحكي', 'A narrator tells it'], ['lesson', 'شرح مباشر بأسئلة مشوّقة', 'Straight lesson with hooks']];
   var MODS = [['practice', 'صفحات تدريب', 'Practice pages', true], ['glossary', 'مسرد المصطلحات', 'Glossary page', true], ['quiz', 'اختبار في الآخر', 'End quiz', true],
-    ['picture', 'صفحة صورة نشاط', 'Activity picture page'], ['video', 'صفحة فيديو يوتيوب', 'YouTube video page'], ['lab', 'مختبر التبخّر (لدروس الماء والحرارة)', 'Evaporation lab (water / heat lessons)']];
+    ['video', 'فيديو يوتيوب في أول الدرس', 'YouTube video at the start'], ['lab', 'مختبر التبخّر', 'Evaporation lab']];
+  var PICS = [['none', 'من غير صور', 'No pictures'], ['activity', 'صفحة صورة للنشاط', 'An activity picture page'], ['chapters', 'صورة في كل صفحة شرح', 'A picture on every chapter page', true], ['both', 'الاتنين', 'Both']];
+  var PICSTYLE = [['pixar', 'ثلاثي الأبعاد كرتون (بيكسار)', '3D cartoon (Pixar-like)', true], ['real', 'واقعي زي الصور الحقيقية', 'Realistic, like real photos']];
+  var SVG = [['svg', 'رسومات SVG يرسمها الذكاء الاصطناعي جوه الصفحات (فورية، من غير رفع)', 'SVG drawings the AI draws inside the pages (instant, no upload)', true]];
+  // the evaporation lab only teaches water and heat lessons
+  function labFits() { return IV.subject === 'science' && /ماء|مياه|مائ|تبخ|بخار|حرار|غلي|سحاب|مطر|water|evapor|vapou?r|heat|boil|cloud|rain/i.test(IV.topic); }
   var QUIZ = [[5, '5', '', true], [8, '8'], [10, '10']];
-  var IV = { topic: '', subject: 'science', stage: 'p46', obj: '', lang: 'fusha', len: 12, style: 'journey', chars: '', mods: ['practice', 'glossary', 'quiz'], quiz: 5, yt: '', notes: '' };
+  var IV = { topic: '', subject: 'science', grade: 'g4', obj: '', lang: 'fusha', len: 12, style: 'journey', chars: '', mods: ['practice', 'glossary', 'quiz'], quiz: 5, yt: '', notes: '',
+    pics: 'chapters', picStyle: 'pixar', svg: ['svg'] };
   try { Object.assign(IV, JSON.parse(localStorage.getItem('mbs-interview') || '{}')); } catch (e) {}
+  if (!GRADES.some(function (g) { return g[0] === IV.grade; })) IV.grade = 'g4';
+  IV.mods = (IV.mods || []).filter(function (m) { return m !== 'picture'; }); if (!Array.isArray(IV.svg)) IV.svg = ['svg'];
   function saveIV() { try { localStorage.setItem('mbs-interview', JSON.stringify(IV)); } catch (e) {} }
 
   function chips(id, opts, key, multi) {
     var box = $(id); box.innerHTML = '';
     opts.forEach(function (o) {
-      if (key === 'mods' && o[0] === 'lab' && IV.subject !== 'science') return;     // a lab teaches nothing in a language lesson
+      if (key === 'mods' && o[0] === 'lab' && !labFits()) return;     // offered only for lessons it teaches
       var b = document.createElement('button'); b.type = 'button';
       var on = multi ? IV[key].indexOf(o[0]) >= 0 : IV[key] === o[0];
       b.setAttribute('aria-pressed', String(on));
@@ -58,25 +80,37 @@
         if (multi) { var i = IV[key].indexOf(o[0]); if (i >= 0) IV[key].splice(i, 1); else IV[key].push(o[0]); }
         else IV[key] = o[0];
         if (key === 'subject') {
-          if (o[0] !== 'science') IV.mods = IV.mods.filter(function (m) { return m !== 'lab'; });
+          if (!labFits()) IV.mods = IV.mods.filter(function (m) { return m !== 'lab'; });
           var label = SUBJECTS.filter(function (s) { return s[0] === o[0]; })[0];
           if (label && o[0] !== 'other') $('subject').value = ui === 'ar' ? label[1] : label[2];
           if (o[0] === 'english' && IV.lang !== 'en') IV.lang = 'en';
         }
-        if (key === 'stage' && !$('grade').value) { /* the teacher can still type an exact grade */ }
         saveIV(); renderIV();
       };
       box.appendChild(b);
     });
   }
   function renderIV() {
-    chips('ivSubject', SUBJECTS, 'subject'); chips('ivStage', STAGES, 'stage'); chips('ivLang', LANGS, 'lang');
+    chips('ivSubject', SUBJECTS, 'subject'); chips('ivLang', LANGS, 'lang');
     chips('ivLen', LENGTHS, 'len'); chips('ivStyle', STYLES, 'style'); chips('ivMods', MODS, 'mods', true); chips('ivQuiz', QUIZ, 'quiz');
-    $('ivQuizBox').hidden = IV.mods.indexOf('quiz') < 0; $('ivYtBox').hidden = IV.mods.indexOf('video') < 0;
+    chips('ivPics', PICS, 'pics'); chips('ivPicStyle', PICSTYLE, 'picStyle'); chips('ivSvg', SVG, 'svg', true);
+    var gs = $('ivGrade'); gs.innerHTML = GRADES.map(function (g) { return '<option value="' + g[0] + '"' + (g[0] === IV.grade ? ' selected' : '') + '>' + (ui === 'ar' ? g[1] : g[2]) + '</option>'; }).join('');
+    $('ivLenCustom').value = IV.len;
+    $('ivQuizBox').hidden = IV.mods.indexOf('quiz') < 0; $('ivYtBox').hidden = IV.mods.indexOf('video') < 0; $('ivStyleBox').hidden = IV.pics === 'none';
     $('ivChars').placeholder = themePack === 'studio' ? (ui === 'ar' ? 'يوسف ومريم ونجم (شخصيات ثيم الاستوديو)' : 'Youssef, Mariam and Negm (Studio theme characters)') : (ui === 'ar' ? 'مثال: كريم وسلمى' : 'e.g. Karim and Salma');
   }
   [['ivTopic', 'topic'], ['ivObj', 'obj'], ['ivChars', 'chars'], ['ivYt', 'yt'], ['ivNotes', 'notes']].forEach(function (x) {
     $(x[0]).value = IV[x[1]] || ''; $(x[0]).addEventListener('input', function () { IV[x[1]] = $(x[0]).value; saveIV(); });
+  });
+  var topicT = 0;
+  $('ivTopic').addEventListener('input', function () { clearTimeout(topicT); topicT = setTimeout(function () { if (!labFits()) IV.mods = IV.mods.filter(function (m) { return m !== 'lab'; }); chips('ivMods', MODS, 'mods', true); }, 400); });
+  $('ivGrade').addEventListener('change', function () {
+    IV.grade = this.value; saveIV();
+    var g = gradeRow(); $('grade').value = IV.lang === 'en' ? g[2] : g[1];
+  });
+  $('ivLenCustom').addEventListener('change', function () {
+    var v = Math.round(+this.value || 12); v = Math.max(8, Math.min(40, v)); if (v % 2) v++;
+    IV.len = v; this.value = v; saveIV(); chips('ivLen', LENGTHS, 'len');
   });
 
   // ---------- the page plan: exact indices, so the contents page and glossary links are right ----------
@@ -86,17 +120,23 @@
     var practiceN = has('practice') ? (N <= 8 ? 1 : N <= 12 ? 2 : N <= 16 ? 3 : 4) : 0;
     var kinds = LANGUAGE_SUBJECTS.indexOf(IV.subject) >= 0 ? ['fill', 'flip', 'order', 'sort'] : ['flip', 'fill', 'sort', 'order'];
     for (var k = 0; k < practiceN; k++) tail.push({ kind: 'practice', sub: kinds[k] });
-    if (has('lab') && IV.subject === 'science') tail.push({ kind: 'lab' });
-    if (has('picture')) tail.push({ kind: 'picture' });
-    if (has('video') && yt) tail.push({ kind: 'video', yt: yt });
+    if (has('lab') && labFits()) tail.push({ kind: 'lab' });
+    if (IV.pics === 'activity' || IV.pics === 'both') tail.push({ kind: 'picture' });
+    var opener = has('video') && yt ? [{ kind: 'video', yt: yt }] : [];
     if (has('quiz')) tail.push({ kind: 'quizpage' });
     if (has('glossary')) tail.push({ kind: 'glossary' });
-    var chapters = N - 3 - tail.length, minCh = Math.max(3, Math.round(N * 0.4));   // cover + contents + back; at least 40% teaching pages
+    var chapters = N - 3 - tail.length - opener.length, minCh = Math.max(3, Math.round(N * 0.4));   // cover + contents + back; at least 40% teaching pages
     function practices() { return tail.filter(function (t) { return t.kind === 'practice'; }).length; }
     while (chapters < minCh && practices() > 1) { tail.splice(tail.map(function (t) { return t.kind; }).lastIndexOf('practice'), 1); chapters++; }
     while (chapters < 3 && practices()) { tail.splice(tail.map(function (t) { return t.kind; }).lastIndexOf('practice'), 1); chapters++; }
-    var rows = [{ kind: 'cover' }, { kind: 'contents' }];
-    for (var c = 0; c < chapters; c++) rows.push({ kind: c === 0 ? 'hook' : 'chapter' });
+    var rows = [{ kind: 'cover' }, { kind: 'contents' }].concat(opener);        // the video opens the lesson
+    var picOn = IV.pics === 'chapters' || IV.pics === 'both', svgOn = IV.svg.indexOf('svg') >= 0, n = 0;
+    for (var c = 0; c < chapters; c++) {
+      var r = { kind: c === 0 ? 'hook' : 'chapter' };
+      if (c > 0) { n++; if (picOn && svgOn) { if (n % 2) r.pic = true; else r.svg = true; } else if (picOn) r.pic = true; else if (svgOn) r.svg = true; }
+      else if (svgOn) r.svg = true;
+      rows.push(r);
+    }
     return rows.concat(tail, [{ kind: 'back' }]);
   }
   function planText(rows) {
@@ -106,18 +146,20 @@
       hook: 'the hook (type html): the characters meet the question or mystery of the lesson',
       chapter: 'chapter page (type html)',
       lab: '{"type":"lab","lab":"evaporation","title":"…","intro":"…","noteTitle":"…","note":"what to notice"}',
-      picture: '{"type":"picture","title":"…","intro":"what the class does and photographs","slot":"activity","prompt":"ENGLISH description of an illustration of this activity"}',
+      picture: '{"type":"picture","title":"…","intro":"what the class does and photographs","slot":"activity","prompt":"ENGLISH description of an illustration of this activity + the style line"}',
       quizpage: 'quiz page (type html): a short "what did we learn" recap and <button class=\'qbtn\' data-quiz=\'1\'>…start the quiz…</button>',
       glossary: '{"type":"glossary","title":"…"} — the engine fills it from meta.glossary',
       back: '{"type":"back"} — uses meta.blurb'
     };
     return rows.map(function (r, i) {
-      var d = r.kind === 'practice' ? '{"type":"practice","kind":"' + r.sub + '", …} (see PRACTICE)' : r.kind === 'video' ? '{"type":"video","title":"…","intro":"…","youtube":"' + r.yt + '"}' : D[r.kind];
+      var d = r.kind === 'practice' ? '{"type":"practice","kind":"' + r.sub + '", …} (see PRACTICE)' : r.kind === 'video' ? '{"type":"video","title":"…","intro":"one line: what to watch for, before the lesson starts","youtube":"' + r.yt + '"}' : D[r.kind];
+      if (r.pic) d += ' + ONE picture space (see PICTURES), slot "p' + i + '"';
+      if (r.svg) d += ' + ONE SVG drawing (see DRAWINGS)';
       return i + '. ' + d;
     }).join('\n');
   }
   function buildPrompt() {
-    var st = STAGES.filter(function (s) { return s[0] === IV.stage; })[0], lv = LEVEL[IV.stage], subj = SUBJECTS.filter(function (s) { return s[0] === IV.subject; })[0];
+    var g = gradeRow(), lv = LEVEL[stage()], subj = SUBJECTS.filter(function (s) { return s[0] === IV.subject; })[0];
     var rows = plan(), studio = themePack === 'studio';
     var lang = IV.lang === 'en' ? 'English' : IV.lang === 'egy' ? 'Egyptian colloquial Arabic (natural Egyptian spelling and rhythm; scientific terms in their standard form)' : 'simple, correct Modern Standard Arabic for Egyptian school children (فصحى مبسّطة) — never colloquial';
     var objectives = IV.obj.split('\n').map(function (x) { return x.trim(); }).filter(Boolean);
@@ -130,7 +172,7 @@
     L.push('');
     L.push('## The teacher’s choices');
     L.push('- Topic: ' + IV.topic.trim());
-    L.push('- Subject: ' + subj[2] + ' · Stage: ' + st[2] + ($('grade').value ? ' (' + $('grade').value + ')' : ''));
+    L.push('- Subject: ' + subj[2] + ' · Grade: ' + g[2] + ' (' + g[1] + ', Egypt)');
     L.push('- Book language: ' + lang + '. Use only this language in every text the reader sees.');
     L.push('- Storytelling: ' + style + '. Characters: ' + chars + '.');
     L.push('- Reading level: ' + lv.rule + ' About ' + lv.words + ' words per chapter page plus at most one box.');
@@ -146,7 +188,23 @@
     L.push('Each html page is ONE string: <div class=\'pg\'> … <div class=\'pgnum\'>N</div></div> where N is index+1' + (IV.lang === 'en' ? '' : ' in Arabic-Indic digits (١ ٢ ٣)') + '. ALWAYS use single quotes for HTML attributes so the JSON stays valid.');
     L.push('Chapter pages follow this pattern: <h2>title</h2> · <p class=\'hook\'>a question, surprise or scene</p> · <p class=\'lead\'>the explanation</p> · dialogue lines <p class=\'dlg\'' + (studio ? ' data-who=\'youssef|mariam|negm\' data-mood=\'happy|curious|surprised\'' : '') + '><b>Name</b>“…”</p> · ONE box: <div class=\'kterm\'><b>Term</b><span>meaning</span></div> or <div class=\'callout tone-tip\'><b>Title</b><span>…</span></div> (tone-tip, tone-example or tone-warning) or <div class=\'activity\'><b>Try it</b><p>…</p></div> · optional <div class=\'emoji-hero\'>🌍💧</div> on every second or third page · on the last page of a chapter <p class=\'cliff\'>a line that pulls to the next page</p>.');
     if (studio) L.push('This book uses the Studio theme: dialogue avatars work with data-who=\'youssef\' (boy), \'mariam\' (girl) or \'negm\' (the star guide); big subject icons: <span class=\'ico ico-xl ico-NAME\'></span> with NAME one of science, maths, arabic, english, history, geography, art, music, sports, computer, space, ocean, plants, animals, human-body, chemistry, physics, reading, star, target, lightbulb, magnifier, warning, quiz-trophy.');
-    L.push('Do NOT mark glossary words in the HTML: the engine links them automatically from meta.glossary. Never use <img> (no pictures exist), <script>, <style> or links.');
+    var picOn = IV.pics === 'chapters' || IV.pics === 'both', svgOn = IV.svg.indexOf('svg') >= 0;
+    var styleLine = IV.picStyle === 'real'
+      ? 'Style: realistic, natural photograph look with true colours, classroom-appropriate, no text, letters or numbers in the picture.'
+      : 'Style: bright Pixar-like 3D cartoon render, soft lighting, rounded friendly shapes, vivid colours, no text, letters or numbers in the picture.';
+    if (picOn) {
+      L.push('');
+      L.push('## PICTURES (the teacher makes them with an image AI and uploads them)');
+      L.push('On the pages marked "picture space" put, right after the <h2>: <div class=\'imgslot sm\' data-slot=\'pINDEX\' data-prompt=\'ENGLISH DESCRIPTION\'></div>');
+      L.push('The description: what the picture shows for THIS page (subject, scene, characters, composition), 16:9 landscape, then: ' + styleLine + ' Pages with a picture keep about two thirds of the usual words.');
+    }
+    if (IV.pics === 'activity' || IV.pics === 'both') L.push('The activity picture page\'s "prompt" ends with the same style line: ' + styleLine);
+    if (svgOn) {
+      L.push('');
+      L.push('## DRAWINGS (you draw them; they appear instantly)');
+      L.push('On the pages marked "SVG drawing" draw ONE small inline illustration of what the page explains (an object, a scene, a simple diagram, a timeline): <svg class=\'ill\' viewBox=\'0 0 320 160\' role=\'img\' aria-label=\'short description\'> … </svg>. Use only rect, circle, ellipse, line, polyline, polygon, path and short text labels; at most 30 shapes; bright friendly colours with dark outlines; no images, links, scripts or styles. Single quotes for every attribute. Use it instead of an emoji line on that page.');
+    }
+    L.push('Do NOT mark glossary words in the HTML: the engine links them automatically from meta.glossary. Never use <img>, <script>, <style>, <iframe> or links.');
     L.push('');
     if (practiceUsed) {
       L.push('## PRACTICE pages (no HTML; they must test what the chapters taught)');
@@ -196,7 +254,7 @@
     if (!b || typeof b !== 'object' || !Array.isArray(b.pages) || !b.pages.length) { err(ar ? 'الرد مافيهوش صفحات (pages).' : 'The reply has no "pages".', 'The JSON has no "pages" array.'); return { E: E, F: F, W: W }; }
     b.meta = b.meta && typeof b.meta === 'object' ? b.meta : {};
     var teacherYt = IV.mods.indexOf('video') >= 0 ? ytId(IV.yt) : '';
-    var limit = { kg: 80, p13: 125, p46: 165, prep: 180, sec: 190 }[IV.stage] || 170;
+    var limit = { kg: 80, p13: 125, p46: 165, prep: 180, sec: 190 }[stage()] || 170;
     b.pages = b.pages.filter(function (p, i) {
       var n = i + 1;
       if (!p || typeof p !== 'object') { F.push(ar ? 'شيلنا صفحة فاضية رقم ' + n : 'Removed an empty page ' + n); return false; }
@@ -205,9 +263,11 @@
       if (p.type === 'html') {
         if (!p.html || typeof p.html !== 'string') { err((ar ? 'صفحة ' : 'Page ') + n + (ar ? ': فاضية' : ': empty'), 'Page index ' + i + ' (type html) has no "html".'); return true; }
         if (!/class=['"][^'"]*\bpg\b/.test(p.html)) { p.html = "<div class='pg'>" + p.html + '</div>'; F.push(ar ? 'لفّينا صفحة ' + n + ' في إطار الصفحة' : 'Wrapped page ' + n + ' in a page frame'); }
+        if (/\son[a-z]+\s*=|javascript:/i.test(p.html)) { p.html = p.html.replace(/\son[a-z]+\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)/gi, '').replace(/javascript:/gi, ''); F.push(ar ? 'شيلنا أكواد خطرة من صفحة ' + n : 'Removed unsafe code from page ' + n); }
         if (/<img\b|<script\b/i.test(p.html)) { p.html = p.html.replace(/<img\b[^>]*>/gi, '').replace(/<script[\s\S]*?<\/script>/gi, ''); F.push(ar ? 'شيلنا صور/سكريبت من صفحة ' + n : 'Removed images/scripts from page ' + n); }
-        var w = words(p.html);
-        if (w > limit) W.push({ t: (ar ? 'صفحة ' : 'Page ') + n + (ar ? ' طويلة (' + w + ' كلمة) — ممكن تتقري بصعوبة' : ' is long (' + w + ' words)'), a: 'Page index ' + i + ' has ' + w + ' words; shorten it to about ' + LEVEL[IV.stage].words + ' words.' });
+        p.html = p.html.replace(/<div class=(['"])imgslot([^'"]*)\1(?![^>]*data-prompt)/g, function (m0, q, cls) { return '<div data-prompt="Friendly educational illustration for this page, no text." class=' + q + 'imgslot' + cls + q; });
+        var w = words(p.html.replace(/<svg[\s\S]*?<\/svg>/gi, ''));
+        if (w > limit) W.push({ t: (ar ? 'صفحة ' : 'Page ') + n + (ar ? ' طويلة (' + w + ' كلمة) — ممكن تتقري بصعوبة' : ' is long (' + w + ' words)'), a: 'Page index ' + i + ' has ' + w + ' words; shorten it to about ' + LEVEL[stage()].words + ' words.' });
       }
       if (p.type === 'practice') {
         var kind = p.kind || 'fill', items = p.items || p.cards || [], bad = '';
@@ -307,4 +367,102 @@
   };
   $('lang').onclick = function () { ui = ui === 'ar' ? 'en' : 'ar'; applyLang(); };
   applyLang();
-  window.__studio_ai = { buildPrompt: buildPrompt, plan: plan, check: checkBook, iv: IV, render: renderIV };
+  // ---------- pictures of the book: copy every description, upload every picture ----------
+  function shrinkImage(file, cb) {
+    var fr = new FileReader();
+    fr.onload = function () { var im = new Image(); im.onload = function () { var k = Math.min(1, 1400 / Math.max(im.width, im.height)), c = document.createElement('canvas'); c.width = Math.round(im.width * k); c.height = Math.round(im.height * k); c.getContext('2d').drawImage(im, 0, 0, c.width, c.height); cb(c.toDataURL('image/jpeg', .86)); }; im.src = fr.result; };
+    fr.readAsDataURL(file);
+  }
+  function renderPics() {
+    var list = live && live.ext && live.ext.slots ? live.ext.slots() : [];
+    $('picsPanel').hidden = !list.length || document.body.classList.contains('reader'); if (!list.length) return;
+    var imgs = live.ext.allImages();
+    $('picsList').innerHTML = list.map(function (x, k) {
+      var has = !!imgs[x.slot];
+      return '<div class="pic"><span>' + esc2(T[ui].pagePfx + ' ' + (x.page + 1) + ' · ' + x.title) + '</span><button type="button" data-pp="' + k + '">' + T[ui].picPrompt + '</button>' +
+        '<button type="button" data-pu="' + k + '"' + (has ? ' class="done"' : '') + '>' + (has ? T[ui].picDone : T[ui].picUp) + '</button></div>';
+    }).join('');
+    $('picsList').onclick = function (e) {
+      var pp = e.target.closest('[data-pp]'), pu = e.target.closest('[data-pu]');
+      if (pp) copyText(list[+pp.dataset.pp].prompt, T[ui].copied);
+      if (pu) {
+        var x = list[+pu.dataset.pu], f = document.createElement('input'); f.type = 'file'; f.accept = 'image/*';
+        f.onchange = function () { if (f.files[0]) shrinkImage(f.files[0], function (u) { live.ext.setImage(x.slot, u); renderPics(); }); };
+        f.click();
+      }
+    };
+    $('picsCopyAll').onclick = function () {
+      copyText('Make these ' + list.length + ' pictures one by one, each as a separate image (16:9 landscape unless the description says otherwise).\n\n' +
+        list.map(function (x, k) { return (k + 1) + ') ' + x.prompt; }).join('\n\n'), T[ui].copied);
+    };
+  }
+
+  // ---------- publish: a link teachers send to students (needs /api/morphbook_api.php on the site) ----------
+  var API = window.__MB__.api || '/api/morphbook_api.php';
+  var canShare = /^https?:$/.test(location.protocol);
+  $('share').hidden = !canShare;
+  var SHARED = {}; try { SHARED = JSON.parse(localStorage.getItem('mbs-share') || '{}'); } catch (e) {}
+  function shareBox(kind, html) { var b = $('shareBox'); b.className = 'report ' + kind; b.innerHTML = html; }
+  $('share').onclick = function () {
+    if (!book) return;
+    var payload = JSON.parse(JSON.stringify(withPictures(book))); delete payload.css;
+    var k = (book.meta.title || 'book').trim(), prev = SHARED[k] || {};
+    status(T[ui].sharing); $('share').disabled = true;
+    fetch(API + '?action=publish', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ book: payload, id: prev.id, key: prev.key }) })
+      .then(function (r) { return r.json().catch(function () { return { ok: false, error: 'HTTP ' + r.status }; }); })
+      .then(function (j) {
+        if (!j || !j.ok) throw new Error(j && j.error === 'too big' ? (ui === 'ar' ? 'الكتاب كبير قوي — قلّل جودة الصفحات أو عدد الصور' : 'The book is too big — lower the page quality or use fewer pictures') : (j && j.error) || 'error');
+        SHARED[k] = { id: j.id, key: j.key }; try { localStorage.setItem('mbs-share', JSON.stringify(SHARED)); } catch (e) {}
+        var url = j.url, again = prev.id === j.id;
+        shareBox('ok', '<b>' + esc2(again ? T[ui].shareAgain : T[ui].shared) + '</b><div class="sharelink"><input type="text" readonly value="' + esc2(url) + '"><button type="button" class="btn" id="shCopy" style="width:auto;margin:0;padding:.45rem .7rem">' + T[ui].shareCopy + '</button></div>' +
+          '<div class="links"><a href="https://wa.me/?text=' + encodeURIComponent((book.meta.title || '') + ' 📖 ' + url) + '" target="_blank" rel="noopener">' + T[ui].shareWa + '</a><a href="' + esc2(url) + '" target="_blank" rel="noopener">' + T[ui].shareOpen + ' ↗</a></div>');
+        $('shCopy').onclick = function () { copyText(url, T[ui].copied); };
+        status('');
+      })
+      .catch(function (e) { shareBox('bad', esc2(T[ui].shareErr + e.message)); status(''); })
+      .then(function () { $('share').disabled = false; });
+  };
+
+  // ---------- reader: index.html?b=ID opens a published book full screen ----------
+  function sanitizeBook(b) {              // a published book comes from the internet: keep only what a book needs
+    if (!b || !Array.isArray(b.pages)) throw new Error('bad');
+    delete b.css; b.meta = b.meta && typeof b.meta === 'object' ? b.meta : {};
+    var DATA_IMG = /^data:image\/(png|jpe?g|webp|gif);/i;
+    b.pages.forEach(function (p) {
+      if (p.html) {
+        var t = document.createElement('template'); t.innerHTML = String(p.html);
+        Array.prototype.forEach.call(t.content.querySelectorAll('script,iframe,object,embed,form,link,meta,base,style,frame,frameset,audio,video,foreignObject'), function (n) { n.remove(); });
+        Array.prototype.forEach.call(t.content.querySelectorAll('*'), function (el) {
+          Array.prototype.slice.call(el.attributes).forEach(function (a) {
+            var n = a.name.toLowerCase(), v = String(a.value).trim();
+            if (/^on/.test(n) || n === 'srcdoc' || (/^(href|src|xlink:href|action|formaction|poster)$/.test(n) && !(v.charAt(0) === '#' || DATA_IMG.test(v))) || (n === 'style' && /url\s*\(|expression|@import/i.test(v))) el.removeAttribute(a.name);
+          });
+        });
+        p.html = t.innerHTML;
+      }
+      if (p.image && !DATA_IMG.test(p.image)) delete p.image;
+      if (p.youtube || p.url) p.youtube = ytId(p.youtube || p.url);
+    });
+    var im = b.meta.images || {}; Object.keys(im).forEach(function (k) { if (typeof im[k] !== 'string' || !DATA_IMG.test(im[k])) delete im[k]; });
+    ['coverImage', 'paperImage'].forEach(function (k) { if (b.meta[k] && !DATA_IMG.test(b.meta[k])) delete b.meta[k]; });
+    if (b.meta.themePack && !Object.hasOwn(packs, b.meta.themePack)) delete b.meta.themePack;
+    return b;
+  }
+  var readId = new URLSearchParams(location.search).get('b');
+  if (readId) {
+    document.body.classList.add('reader');
+    $('empty').querySelector('p').textContent = T[ui].readLoading;
+    $('readDl').textContent = T[ui].readDl; $('readMake').textContent = T[ui].readMake;
+    fetch(API + '?action=get&id=' + encodeURIComponent(readId))
+      .then(function (r) { return r.json(); })
+      .then(function (j) {
+        if (!j || !j.ok) throw new Error('missing');
+        var b = sanitizeBook(j.book); loadBook(b, false); document.title = (b.meta.title || 'MorphBook') + ' · MorphBook';
+      })
+      .catch(function () { $('empty').style.display = ''; $('empty').querySelector('p').textContent = T[ui].readMissing; });
+    $('readDl').onclick = function () { if (book) download(slug() + '.html', standalone(book), 'text/html'); };
+  }
+  var _mk = $('makePrompt').onclick;
+  $('makePrompt').onclick = function () { if (!$('grade').value) { var g = gradeRow(); $('grade').value = IV.lang === 'en' ? g[2] : g[1]; } _mk(); };
+
+  window.__studio_ai = { buildPrompt: buildPrompt, plan: plan, check: checkBook, iv: IV, render: renderIV, sanitize: sanitizeBook, renderPics: renderPics };

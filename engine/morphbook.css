@@ -337,6 +337,11 @@ html[data-vt="back"]::view-transition-new(mb-book){animation-name:mb-vt-in-b}
 .mb-root .pg .imgslot .is-tools{position:absolute;inset-inline-end:.4em;top:.4em;display:flex;gap:.3em;flex-wrap:wrap}
 .mb-root .pg .imgslot .is-ph .is-tools{position:static;justify-content:center}
 .mb-root .pg .imgslot .px-btn{font-size:.82em;padding:.25em .7em;min-height:2em}
+.mb-root .pg svg.ill{display:block;width:82%;height:auto;max-height:34%;margin:.35em auto .45em}
+.mb-root .pg .imgslot.sm{aspect-ratio:16/9;width:78%;margin:.35em auto .45em;border-width:2px}
+.mb-root .pg .imgslot.sm .is-ph{gap:.3em;padding:.4em;font-size:.78em}
+.mb-root .pg .imgslot.sm .is-ph>span{display:none}
+.mb-root .pg .imgslot.sm .px-btn{font-size:.8em;padding:.18em .55em;min-height:1.8em}
 /* search panel, selection bar, meaning card, toast (live outside the pages) */
 .mbx-panel{position:absolute;inset-inline:0;top:60px;margin:0 auto;width:min(560px,94vw);max-height:70vh;z-index:60;display:none;flex-direction:column;background:var(--paper,#fff);color:var(--ink,#222);border-radius:18px;box-shadow:0 18px 50px rgba(20,30,60,.3);overflow:hidden;font-family:var(--font,inherit)}
 .mbx-panel.open{display:flex}

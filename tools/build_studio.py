@@ -76,5 +76,10 @@ if __name__ == "__main__":
     import sys
     if "--hosting" in sys.argv:                   # the file to upload to Hostinger as public_html/apps/morphbook/index.html
         main(os.path.join(ROOT, "dist", "hostinger", "public_html", "apps", "morphbook", "index.html"), hosting=True)
+        import shutil                             # the publish API goes next to your other APIs
+        api = os.path.join(ROOT, "dist", "hostinger", "public_html", "api")
+        os.makedirs(api, exist_ok=True)
+        shutil.copyfile(os.path.join(ROOT, "server", "morphbook_api.php"), os.path.join(api, "morphbook_api.php"))
+        print("copied", os.path.join(api, "morphbook_api.php"))
     else:
         main()

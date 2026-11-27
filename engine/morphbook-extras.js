@@ -562,6 +562,24 @@
       each('.mb-page', hydrate); refreshLive();
     };
     api.search = openSearch; api.closeSearch = closeSearch;
+    api.blockPeek = function () { return !!root.querySelector('.mb-slot .yt, .mb-slot .px, .mb-slot .lab2, .mb-slot .imgslot'); };
+    // pictures: the Studio lists every picture space of the book and fills them
+    api.slots = function () {
+      var out = [], seen = {};
+      pages.forEach(function (p, i) {
+        Array.prototype.forEach.call(parse(p.html || '').content.querySelectorAll('.imgslot[data-slot]'), function (b) {
+          var id = b.getAttribute('data-slot'); if (seen[id]) return; seen[id] = 1;
+          out.push({ slot: id, page: i, title: p.title || '', prompt: b.getAttribute('data-prompt') || '', has: !!IMGS[id] });
+        });
+      });
+      return out;
+    };
+    api.setImage = function (slot, url) { setImg(slot, url); };
+    api.allImages = function () {          // pictures added in this browser (kept or in localStorage) — the Studio writes them into the download
+      var out = Object.assign({}, IMGS);
+      api.slots().forEach(function (x) { if (!out[x.slot]) { try { var v = localStorage.getItem(imgKey(x.slot)); if (v) out[x.slot] = v; } catch (e) {} } });
+      return out;
+    };
     api.destroy = function () {
       running.forEach(function (r) { r.inst.stop(); }); running = [];
       mo.disconnect(); offs.forEach(function (f) { f(); }); timers.forEach(function (t) { clearTimeout(t); clearInterval(t); });
